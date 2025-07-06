@@ -1,17 +1,19 @@
 {
-    "name": ":vendor_slug/:package_slug",
-    "description": ":package_description",
+    "name": "lumen/lumen-tw",
+    "description": "Tailwind merge port for Laravel",
     "keywords": [
-        ":vendor_name",
+        "Lumen",
         "laravel",
-        ":package_slug"
+        "lumen-tw",
+        "Tailwind merge",
+        "Tailwind merge PHP"
     ],
-    "homepage": "https://github.com/:vendor_slug/:package_slug",
+    "homepage": "https://github.com/lumen/lumen-tw",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": "author@domain.com",
+            "name": "Fa-BRAIK",
+            "email": "faroukbraik17@gmail.com",
             "role": "Developer"
         }
     ],
@@ -35,13 +37,13 @@
     },
     "autoload": {
         "psr-4": {
-            "VendorName\\Skeleton\\": "src/",
-            "VendorName\\Skeleton\\Database\\Factories\\": "database/factories/"
+            "Lumen\\TwMerge\\": "src/",
+            "Lumen\\TwMerge\\Database\\Factories\\": "database/factories/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorName\\Skeleton\\Tests\\": "tests/",
+            "Lumen\\TwMerge\\Tests\\": "tests/",
             "Workbench\\App\\": "workbench/app/"
         }
     },
@@ -51,7 +53,13 @@
         "analyse": "vendor/bin/phpstan analyse",
         "test": "vendor/bin/pest",
         "test-coverage": "vendor/bin/pest --coverage",
-        "format": "vendor/bin/pint"
+        "format": "vendor/bin/pint",
+        "pre-commit": [
+            "@post-autoload-dump",
+            "@format",
+            "@analyse",
+            "@test"
+        ]
     },
     "config": {
         "sort-packages": true,
@@ -63,10 +71,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "VendorName\\Skeleton\\SkeletonServiceProvider"
+                "Lumen\\TwMerge\\TwMergeServiceProvider"
             ],
             "aliases": {
-                "Skeleton": "VendorName\\Skeleton\\Facades\\Skeleton"
+                "TwMerge": "Lumen\\TwMerge\\Facades\\TwMerge"
             }
         }
     },
