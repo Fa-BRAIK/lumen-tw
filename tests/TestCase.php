@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Lumen\TwMerge\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -13,18 +15,11 @@ class TestCase extends Orchestra
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'Lumen\\TwMerge\\Database\\Factories\\'.class_basename($modelName).'Factory'
+            fn (string $modelName) => 'Lumen\\TwMerge\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
         );
     }
 
-    protected function getPackageProviders($app)
-    {
-        return [
-            TwMergeServiceProvider::class,
-        ];
-    }
-
-    public function getEnvironmentSetUp($app)
+    public function getEnvironmentSetUp($app): void
     {
         config()->set('database.default', 'testing');
 
@@ -33,5 +28,12 @@ class TestCase extends Orchestra
             (include $migration->getRealPath())->up();
          }
          */
+    }
+
+    protected function getPackageProviders($app)
+    {
+        return [
+            TwMergeServiceProvider::class,
+        ];
     }
 }
