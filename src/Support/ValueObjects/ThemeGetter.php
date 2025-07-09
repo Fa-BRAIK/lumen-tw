@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Lumen\TwMerge\Support\ValueObjects;
 
+/**
+ * @phpstan-consistent-constructor
+ */
 class ThemeGetter
 {
     public function __construct(

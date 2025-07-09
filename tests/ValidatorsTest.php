@@ -5,258 +5,280 @@ declare(strict_types=1);
 use Lumen\TwMerge\Support\Validators;
 
 it('can use IsAnyValidator', function (): void {
-    expect(resolve(Validators\IsAnyValidator::class)())->toBeTrue();
-    expect(resolve(Validators\IsAnyValidator::class)(''))->toBeTrue();
-    expect(resolve(Validators\IsAnyValidator::class)('foo'))->toBeTrue();
+    $isAny = resolve(Validators\IsAnyValidator::class);
+
+    expect($isAny())->toBeTrue()
+        ->and($isAny(''))->toBeTrue()
+        ->and($isAny('foo'))->toBeTrue();
 });
 
 it('can use IsAnyNonArbitrary', function (): void {
-    expect(resolve(Validators\IsAnyNonArbitrary::class)('test'))->toBeTrue();
-    expect(resolve(Validators\IsAnyNonArbitrary::class)('1234-hello-world'))->toBeTrue();
-    expect(resolve(Validators\IsAnyNonArbitrary::class)('[hello'))->toBeTrue();
-    expect(resolve(Validators\IsAnyNonArbitrary::class)('hello]'))->toBeTrue();
-    expect(resolve(Validators\IsAnyNonArbitrary::class)('[)'))->toBeTrue();
-    expect(resolve(Validators\IsAnyNonArbitrary::class)('(hello]'))->toBeTrue();
+    $isAnyNonArbitrary = resolve(Validators\IsAnyNonArbitrary::class);
 
-    expect(resolve(Validators\IsAnyNonArbitrary::class)('[test]'))->toBeFalse();
-    expect(resolve(Validators\IsAnyNonArbitrary::class)('[label:test]'))->toBeFalse();
-    expect(resolve(Validators\IsAnyNonArbitrary::class)('(test)'))->toBeFalse();
-    expect(resolve(Validators\IsAnyNonArbitrary::class)('(label:test)'))->toBeFalse();
+    expect($isAnyNonArbitrary('test'))->toBeTrue()
+        ->and($isAnyNonArbitrary('1234-hello-world'))->toBeTrue()
+        ->and($isAnyNonArbitrary('[hello'))->toBeTrue()
+        ->and($isAnyNonArbitrary('hello]'))->toBeTrue()
+        ->and($isAnyNonArbitrary('[)'))->toBeTrue()
+        ->and($isAnyNonArbitrary('(hello]'))->toBeTrue()
+        ->and($isAnyNonArbitrary('[test]'))->toBeFalse()
+        ->and($isAnyNonArbitrary('[label:test]'))->toBeFalse()
+        ->and($isAnyNonArbitrary('(test)'))->toBeFalse()
+        ->and($isAnyNonArbitrary('(label:test)'))->toBeFalse();
 });
 
 it('can use IsArbitraryImageValidator', function (): void {
-    expect(resolve(Validators\IsArbitraryImageValidator::class)('[url:var(--my-url)]'))->toBeTrue();
-    expect(resolve(Validators\IsArbitraryImageValidator::class)('[url(something)]'))->toBeTrue();
-    expect(resolve(Validators\IsArbitraryImageValidator::class)('[url:bla]'))->toBeTrue();
-    expect(resolve(Validators\IsArbitraryImageValidator::class)('[image:bla]'))->toBeTrue();
-    expect(resolve(Validators\IsArbitraryImageValidator::class)('[linear-gradient(something)]'))->toBeTrue();
-    expect(resolve(Validators\IsArbitraryImageValidator::class)('[repeating-conic-gradient(something)]'))->toBeTrue();
+    $isArbitraryImage = resolve(Validators\IsArbitraryImageValidator::class);
 
-    expect(resolve(Validators\IsArbitraryImageValidator::class)('[var(--my-url)]'))->toBeFalse();
-    expect(resolve(Validators\IsArbitraryImageValidator::class)('[bla]'))->toBeFalse();
-    expect(resolve(Validators\IsArbitraryImageValidator::class)('url:2px'))->toBeFalse();
-    expect(resolve(Validators\IsArbitraryImageValidator::class)('url(2px)'))->toBeFalse();
+    expect($isArbitraryImage('[url:var(--my-url)]'))->toBeTrue()
+        ->and($isArbitraryImage('[url(something)]'))->toBeTrue()
+        ->and($isArbitraryImage('[url:bla]'))->toBeTrue()
+        ->and($isArbitraryImage('[image:bla]'))->toBeTrue()
+        ->and($isArbitraryImage('[linear-gradient(something)]'))->toBeTrue()
+        ->and($isArbitraryImage('[repeating-conic-gradient(something)]'))->toBeTrue()
+        ->and($isArbitraryImage('[var(--my-url)]'))->toBeFalse()
+        ->and($isArbitraryImage('[bla]'))->toBeFalse()
+        ->and($isArbitraryImage('url:2px'))->toBeFalse()
+        ->and($isArbitraryImage('url(2px)'))->toBeFalse();
 });
 
 it('can use IsArbitraryLengthValidator', function (): void {
-    expect(resolve(Validators\IsArbitraryLengthValidator::class)('[3.7%]'))->toBeTrue();
-    expect(resolve(Validators\IsArbitraryLengthValidator::class)('[481px]'))->toBeTrue();
-    expect(resolve(Validators\IsArbitraryLengthValidator::class)('[19.1rem]'))->toBeTrue();
-    expect(resolve(Validators\IsArbitraryLengthValidator::class)('[50vw]'))->toBeTrue();
-    expect(resolve(Validators\IsArbitraryLengthValidator::class)('[56vh]'))->toBeTrue();
-    expect(resolve(Validators\IsArbitraryLengthValidator::class)('[length:var(--arbitrary)]'))->toBeTrue();
+    $isArbitraryLength = resolve(Validators\IsArbitraryLengthValidator::class);
 
-    expect(resolve(Validators\IsArbitraryLengthValidator::class)('1'))->toBeFalse();
-    expect(resolve(Validators\IsArbitraryLengthValidator::class)('3px'))->toBeFalse();
-    expect(resolve(Validators\IsArbitraryLengthValidator::class)('1d5'))->toBeFalse();
-    expect(resolve(Validators\IsArbitraryLengthValidator::class)('[1]'))->toBeFalse();
-    expect(resolve(Validators\IsArbitraryLengthValidator::class)('[12px'))->toBeFalse();
-    expect(resolve(Validators\IsArbitraryLengthValidator::class)('12px]'))->toBeFalse();
-    expect(resolve(Validators\IsArbitraryLengthValidator::class)('one'))->toBeFalse();
+    expect($isArbitraryLength('[3.7%]'))->toBeTrue()
+        ->and($isArbitraryLength('[481px]'))->toBeTrue()
+        ->and($isArbitraryLength('[19.1rem]'))->toBeTrue()
+        ->and($isArbitraryLength('[50vw]'))->toBeTrue()
+        ->and($isArbitraryLength('[56vh]'))->toBeTrue()
+        ->and($isArbitraryLength('[length:var(--arbitrary)]'))->toBeTrue()
+        ->and($isArbitraryLength('1'))->toBeFalse()
+        ->and($isArbitraryLength('3px'))->toBeFalse()
+        ->and($isArbitraryLength('1d5'))->toBeFalse()
+        ->and($isArbitraryLength('[1]'))->toBeFalse()
+        ->and($isArbitraryLength('[12px'))->toBeFalse()
+        ->and($isArbitraryLength('12px]'))->toBeFalse()
+        ->and($isArbitraryLength('one'))->toBeFalse();
 });
 
 it('can use IsArbitraryNumberValidator', function (): void {
-    expect(resolve(Validators\IsArbitraryNumberValidator::class)('[number:black]'))->toBeTrue();
-    expect(resolve(Validators\IsArbitraryNumberValidator::class)('[number:bla]'))->toBeTrue();
-    expect(resolve(Validators\IsArbitraryNumberValidator::class)('[number:230]'))->toBeTrue();
-    expect(resolve(Validators\IsArbitraryNumberValidator::class)('[450]'))->toBeTrue();
+    $isArbitraryNumber = resolve(Validators\IsArbitraryNumberValidator::class);
 
-    expect(resolve(Validators\IsArbitraryNumberValidator::class)('[2px]'))->toBeFalse();
-    expect(resolve(Validators\IsArbitraryNumberValidator::class)('[bla]'))->toBeFalse();
-    expect(resolve(Validators\IsArbitraryNumberValidator::class)('[black]'))->toBeFalse();
-    expect(resolve(Validators\IsArbitraryNumberValidator::class)('black'))->toBeFalse();
-    expect(resolve(Validators\IsArbitraryNumberValidator::class)('450'))->toBeFalse();
+    expect($isArbitraryNumber('[number:black]'))->toBeTrue()
+        ->and($isArbitraryNumber('[number:bla]'))->toBeTrue()
+        ->and($isArbitraryNumber('[number:230]'))->toBeTrue()
+        ->and($isArbitraryNumber('[450]'))->toBeTrue()
+        ->and($isArbitraryNumber('[2px]'))->toBeFalse()
+        ->and($isArbitraryNumber('[bla]'))->toBeFalse()
+        ->and($isArbitraryNumber('[black]'))->toBeFalse()
+        ->and($isArbitraryNumber('black'))->toBeFalse()
+        ->and($isArbitraryNumber('450'))->toBeFalse();
 });
 
 it('can use IsArbitraryPositionValidator', function (): void {
-    expect(resolve(Validators\IsArbitraryPositionValidator::class)('[position:2px]'))->toBeTrue();
-    expect(resolve(Validators\IsArbitraryPositionValidator::class)('[position:bla]'))->toBeTrue();
-    expect(resolve(Validators\IsArbitraryPositionValidator::class)('[percentage:bla]'))->toBeTrue();
+    $isArbitraryPosition = resolve(Validators\IsArbitraryPositionValidator::class);
 
-    expect(resolve(Validators\IsArbitraryPositionValidator::class)('[2px]'))->toBeFalse();
-    expect(resolve(Validators\IsArbitraryPositionValidator::class)('[bla]'))->toBeFalse();
-    expect(resolve(Validators\IsArbitraryPositionValidator::class)('position:2px'))->toBeFalse();
+    expect($isArbitraryPosition('[position:2px]'))->toBeTrue()
+        ->and($isArbitraryPosition('[position:bla]'))->toBeTrue()
+        ->and($isArbitraryPosition('[percentage:bla]'))->toBeTrue()
+        ->and($isArbitraryPosition('[2px]'))->toBeFalse()
+        ->and($isArbitraryPosition('[bla]'))->toBeFalse()
+        ->and($isArbitraryPosition('position:2px'))->toBeFalse();
 });
 
 it('can use IsArbitraryShadowValidator', function (): void {
-    expect(resolve(Validators\IsArbitraryShadowValidator::class)('[0_35px_60px_-15px_rgba(0,0,0,0.3)]'))->toBeTrue();
-    expect(resolve(Validators\IsArbitraryShadowValidator::class)('[inset_0_1px_0,inset_0_-1px_0]'))->toBeTrue();
-    expect(resolve(Validators\IsArbitraryShadowValidator::class)('[0_0_#00f]'))->toBeTrue();
-    expect(resolve(Validators\IsArbitraryShadowValidator::class)('[.5rem_0_rgba(5,5,5,5)]'))->toBeTrue();
-    expect(resolve(Validators\IsArbitraryShadowValidator::class)('[-.5rem_0_#123456]'))->toBeTrue();
-    expect(resolve(Validators\IsArbitraryShadowValidator::class)('[0.5rem_-0_#123456]'))->toBeTrue();
-    expect(resolve(Validators\IsArbitraryShadowValidator::class)('[0.5rem_-0.005vh_#123456]'))->toBeTrue();
-    expect(resolve(Validators\IsArbitraryShadowValidator::class)('[0.5rem_-0.005vh]'))->toBeTrue();
+    $isArbitraryShadow = resolve(Validators\IsArbitraryShadowValidator::class);
 
-    expect(resolve(Validators\IsArbitraryShadowValidator::class)('[rgba(5,5,5,5)]'))->toBeFalse();
-    expect(resolve(Validators\IsArbitraryShadowValidator::class)('[#00f]'))->toBeFalse();
-    expect(resolve(Validators\IsArbitraryShadowValidator::class)('[something-else]'))->toBeFalse();
+    expect($isArbitraryShadow('[0_35px_60px_-15px_rgba(0,0,0,0.3)]'))->toBeTrue()
+        ->and($isArbitraryShadow('[inset_0_1px_0,inset_0_-1px_0]'))->toBeTrue()
+        ->and($isArbitraryShadow('[0_0_#00f]'))->toBeTrue()
+        ->and($isArbitraryShadow('[.5rem_0_rgba(5,5,5,5)]'))->toBeTrue()
+        ->and($isArbitraryShadow('[-.5rem_0_#123456]'))->toBeTrue()
+        ->and($isArbitraryShadow('[0.5rem_-0_#123456]'))->toBeTrue()
+        ->and($isArbitraryShadow('[0.5rem_-0.005vh_#123456]'))->toBeTrue()
+        ->and($isArbitraryShadow('[0.5rem_-0.005vh]'))->toBeTrue()
+        ->and($isArbitraryShadow('[rgba(5,5,5,5)]'))->toBeFalse()
+        ->and($isArbitraryShadow('[#00f]'))->toBeFalse()
+        ->and($isArbitraryShadow('[something-else]'))->toBeFalse();
 });
 
 it('can use IsArbitrarySizeValidator', function (): void {
-    expect(resolve(Validators\IsArbitrarySizeValidator::class)('[size:2px]'))->toBeTrue();
-    expect(resolve(Validators\IsArbitrarySizeValidator::class)('[size:bla]'))->toBeTrue();
-    expect(resolve(Validators\IsArbitrarySizeValidator::class)('[length:bla]'))->toBeTrue();
+    $isArbitrarySize = resolve(Validators\IsArbitrarySizeValidator::class);
 
-    expect(resolve(Validators\IsArbitrarySizeValidator::class)('[2px]'))->toBeFalse();
-    expect(resolve(Validators\IsArbitrarySizeValidator::class)('[bla]'))->toBeFalse();
-    expect(resolve(Validators\IsArbitrarySizeValidator::class)('size:2px'))->toBeFalse();
-    expect(resolve(Validators\IsArbitrarySizeValidator::class)('[percentage:bla]'))->toBeFalse();
+    expect($isArbitrarySize('[size:2px]'))->toBeTrue()
+        ->and($isArbitrarySize('[size:bla]'))->toBeTrue()
+        ->and($isArbitrarySize('[length:bla]'))->toBeTrue()
+        ->and($isArbitrarySize('[2px]'))->toBeFalse()
+        ->and($isArbitrarySize('[bla]'))->toBeFalse()
+        ->and($isArbitrarySize('size:2px'))->toBeFalse()
+        ->and($isArbitrarySize('[percentage:bla]'))->toBeFalse();
 });
 
 it('can use IsArbitraryValueValidator', function (): void {
-    expect(resolve(Validators\IsArbitraryValueValidator::class)('[1]'))->toBeTrue();
-    expect(resolve(Validators\IsArbitraryValueValidator::class)('[bla]'))->toBeTrue();
-    expect(resolve(Validators\IsArbitraryValueValidator::class)('[not-an-arbitrary-value?]'))->toBeTrue();
-    expect(resolve(Validators\IsArbitraryValueValidator::class)('[auto,auto,minmax(0,1fr),calc(100vw-50%)]'))->toBeTrue();
+    $isArbitraryValue = resolve(Validators\IsArbitraryValueValidator::class);
 
-    expect(resolve(Validators\IsArbitraryValueValidator::class)('[]'))->toBeFalse();
-    expect(resolve(Validators\IsArbitraryValueValidator::class)('[1'))->toBeFalse();
-    expect(resolve(Validators\IsArbitraryValueValidator::class)('1]'))->toBeFalse();
-    expect(resolve(Validators\IsArbitraryValueValidator::class)('1'))->toBeFalse();
-    expect(resolve(Validators\IsArbitraryValueValidator::class)('one'))->toBeFalse();
-    expect(resolve(Validators\IsArbitraryValueValidator::class)('o[n]e'))->toBeFalse();
+    expect($isArbitraryValue('[1]'))->toBeTrue()
+        ->and($isArbitraryValue('[bla]'))->toBeTrue()
+        ->and($isArbitraryValue('[not-an-arbitrary-value?]'))->toBeTrue()
+        ->and($isArbitraryValue('[auto,auto,minmax(0,1fr),calc(100vw-50%)]'))->toBeTrue()
+        ->and($isArbitraryValue('[]'))->toBeFalse()
+        ->and($isArbitraryValue('[1'))->toBeFalse()
+        ->and($isArbitraryValue('1]'))->toBeFalse()
+        ->and($isArbitraryValue('1'))->toBeFalse()
+        ->and($isArbitraryValue('one'))->toBeFalse()
+        ->and($isArbitraryValue('o[n]e'))->toBeFalse();
 });
 
 it('can use IsArbitraryVariableValidator', function (): void {
-    expect(resolve(Validators\IsArbitraryVariableValidator::class)('(1)'))->toBeTrue();
-    expect(resolve(Validators\IsArbitraryVariableValidator::class)('(bla)'))->toBeTrue();
-    expect(resolve(Validators\IsArbitraryVariableValidator::class)('(not-an-arbitrary-value?)'))->toBeTrue();
-    expect(resolve(Validators\IsArbitraryVariableValidator::class)('(--my-arbitrary-variable)'))->toBeTrue();
-    expect(resolve(Validators\IsArbitraryVariableValidator::class)('(label:--my-arbitrary-variable)'))->toBeTrue();
+    $isArbitraryVariable = resolve(Validators\IsArbitraryVariableValidator::class);
 
-    expect(resolve(Validators\IsArbitraryVariableValidator::class)('()'))->toBeFalse();
-    expect(resolve(Validators\IsArbitraryVariableValidator::class)('(1'))->toBeFalse();
-    expect(resolve(Validators\IsArbitraryVariableValidator::class)('1)'))->toBeFalse();
-    expect(resolve(Validators\IsArbitraryVariableValidator::class)('1'))->toBeFalse();
-    expect(resolve(Validators\IsArbitraryVariableValidator::class)('one'))->toBeFalse();
-    expect(resolve(Validators\IsArbitraryVariableValidator::class)('o(n)e'))->toBeFalse();
+    expect($isArbitraryVariable('(1)'))->toBeTrue()
+        ->and($isArbitraryVariable('(bla)'))->toBeTrue()
+        ->and($isArbitraryVariable('(not-an-arbitrary-value?)'))->toBeTrue()
+        ->and($isArbitraryVariable('(--my-arbitrary-variable)'))->toBeTrue()
+        ->and($isArbitraryVariable('(label:--my-arbitrary-variable)'))->toBeTrue()
+        ->and($isArbitraryVariable('()'))->toBeFalse()
+        ->and($isArbitraryVariable('(1'))->toBeFalse()
+        ->and($isArbitraryVariable('1)'))->toBeFalse()
+        ->and($isArbitraryVariable('1'))->toBeFalse()
+        ->and($isArbitraryVariable('one'))->toBeFalse()
+        ->and($isArbitraryVariable('o(n)e'))->toBeFalse();
 });
 
 it('can use IsArbitraryVariableFamilyNameValidator', function (): void {
-    expect(resolve(Validators\IsArbitraryVariableFamilyNameValidator::class)('(family-name:test)'))->toBeTrue();
+    $isArbitraryVariableFamilyName = resolve(Validators\IsArbitraryVariableFamilyNameValidator::class);
 
-    expect(resolve(Validators\IsArbitraryVariableFamilyNameValidator::class)('(other:test)'))->toBeFalse();
-    expect(resolve(Validators\IsArbitraryVariableFamilyNameValidator::class)('(test)'))->toBeFalse();
-    expect(resolve(Validators\IsArbitraryVariableFamilyNameValidator::class)('family-name:test'))->toBeFalse();
+    expect($isArbitraryVariableFamilyName('(family-name:test)'))->toBeTrue()
+        ->and($isArbitraryVariableFamilyName('(other:test)'))->toBeFalse()
+        ->and($isArbitraryVariableFamilyName('(test)'))->toBeFalse()
+        ->and($isArbitraryVariableFamilyName('family-name:test'))->toBeFalse();
 });
 
 it('can use IsArbitraryVariableImageValidator', function (): void {
-    expect(resolve(Validators\IsArbitraryVariableImageValidator::class)('(image:test)'))->toBeTrue();
-    expect(resolve(Validators\IsArbitraryVariableImageValidator::class)('(url:test)'))->toBeTrue();
+    $isArbitraryVariableImage = resolve(Validators\IsArbitraryVariableImageValidator::class);
 
-    expect(resolve(Validators\IsArbitraryVariableImageValidator::class)('(other:test)'))->toBeFalse();
-    expect(resolve(Validators\IsArbitraryVariableImageValidator::class)('(test)'))->toBeFalse();
-    expect(resolve(Validators\IsArbitraryVariableImageValidator::class)('image:test'))->toBeFalse();
+    expect($isArbitraryVariableImage('(image:test)'))->toBeTrue()
+        ->and($isArbitraryVariableImage('(url:test)'))->toBeTrue()
+        ->and($isArbitraryVariableImage('(other:test)'))->toBeFalse()
+        ->and($isArbitraryVariableImage('(test)'))->toBeFalse()
+        ->and($isArbitraryVariableImage('image:test'))->toBeFalse();
 });
 
 it('can use IsArbitraryVariableLengthValidator', function (): void {
-    expect(resolve(Validators\IsArbitraryVariableLengthValidator::class)('(length:test)'))->toBeTrue();
+    $isArbitraryVariableLength = resolve(Validators\IsArbitraryVariableLengthValidator::class);
 
-    expect(resolve(Validators\IsArbitraryVariableLengthValidator::class)('(other:test)'))->toBeFalse();
-    expect(resolve(Validators\IsArbitraryVariableLengthValidator::class)('(test)'))->toBeFalse();
-    expect(resolve(Validators\IsArbitraryVariableLengthValidator::class)('length:test'))->toBeFalse();
+    expect($isArbitraryVariableLength('(length:test)'))->toBeTrue()
+        ->and($isArbitraryVariableLength('(other:test)'))->toBeFalse()
+        ->and($isArbitraryVariableLength('(test)'))->toBeFalse()
+        ->and($isArbitraryVariableLength('length:test'))->toBeFalse();
 });
 
 it('can use IsArbitraryVariablePositionValidator', function (): void {
-    expect(resolve(Validators\IsArbitraryVariablePositionValidator::class)('(position:test)'))->toBeTrue();
+    $isArbitraryVariablePosition = resolve(Validators\IsArbitraryVariablePositionValidator::class);
 
-    expect(resolve(Validators\IsArbitraryVariablePositionValidator::class)('(other:test)'))->toBeFalse();
-    expect(resolve(Validators\IsArbitraryVariablePositionValidator::class)('(test)'))->toBeFalse();
-    expect(resolve(Validators\IsArbitraryVariablePositionValidator::class)('position:test'))->toBeFalse();
-    expect(resolve(Validators\IsArbitraryVariablePositionValidator::class)('percentage:test'))->toBeFalse();
+    expect($isArbitraryVariablePosition('(position:test)'))->toBeTrue()
+        ->and($isArbitraryVariablePosition('(other:test)'))->toBeFalse()
+        ->and($isArbitraryVariablePosition('(test)'))->toBeFalse()
+        ->and($isArbitraryVariablePosition('position:test'))->toBeFalse()
+        ->and($isArbitraryVariablePosition('percentage:test'))->toBeFalse();
 });
 
 it('can use IsArbitraryVariableShadowValidator', function (): void {
-    expect(resolve(Validators\IsArbitraryVariableShadowValidator::class)('(shadow:test)'))->toBeTrue();
-    expect(resolve(Validators\IsArbitraryVariableShadowValidator::class)('(test)'))->toBeTrue();
+    $isArbitraryVariableShadow = resolve(Validators\IsArbitraryVariableShadowValidator::class);
 
-    expect(resolve(Validators\IsArbitraryVariableShadowValidator::class)('(other:test)'))->toBeFalse();
-    expect(resolve(Validators\IsArbitraryVariableShadowValidator::class)('shadow:test'))->toBeFalse();
+    expect($isArbitraryVariableShadow('(shadow:test)'))->toBeTrue()
+        ->and($isArbitraryVariableShadow('(test)'))->toBeTrue()
+        ->and($isArbitraryVariableShadow('(other:test)'))->toBeFalse()
+        ->and($isArbitraryVariableShadow('shadow:test'))->toBeFalse();
 });
 
 it('can use IsArbitraryVariableSizeValidator', function (): void {
-    expect(resolve(Validators\IsArbitraryVariableSizeValidator::class)('(size:test)'))->toBeTrue();
-    expect(resolve(Validators\IsArbitraryVariableSizeValidator::class)('(length:test)'))->toBeTrue();
+    $isArbitraryVariableSize = resolve(Validators\IsArbitraryVariableSizeValidator::class);
 
-    expect(resolve(Validators\IsArbitraryVariableSizeValidator::class)('(other:test)'))->toBeFalse();
-    expect(resolve(Validators\IsArbitraryVariableSizeValidator::class)('(test)'))->toBeFalse();
-    expect(resolve(Validators\IsArbitraryVariableSizeValidator::class)('size:test'))->toBeFalse();
-    expect(resolve(Validators\IsArbitraryVariableSizeValidator::class)('(percentage:test)'))->toBeFalse();
+    expect($isArbitraryVariableSize('(size:test)'))->toBeTrue()
+        ->and($isArbitraryVariableSize('(length:test)'))->toBeTrue()
+        ->and($isArbitraryVariableSize('(other:test)'))->toBeFalse()
+        ->and($isArbitraryVariableSize('(test)'))->toBeFalse()
+        ->and($isArbitraryVariableSize('size:test'))->toBeFalse()
+        ->and($isArbitraryVariableSize('(percentage:test)'))->toBeFalse();
 });
 
 it('can use IsFractionValidator', function (): void {
-    expect(resolve(Validators\IsFractionValidator::class)('1/2'))->toBeTrue();
-    expect(resolve(Validators\IsFractionValidator::class)('123/209'))->toBeTrue();
+    $isFraction = resolve(Validators\IsFractionValidator::class);
 
-    expect(resolve(Validators\IsFractionValidator::class)('1'))->toBeFalse();
-    expect(resolve(Validators\IsFractionValidator::class)('1/2/3'))->toBeFalse();
-    expect(resolve(Validators\IsFractionValidator::class)('[1/2]'))->toBeFalse();
+    expect($isFraction('1/2'))->toBeTrue()
+        ->and($isFraction('123/209'))->toBeTrue()
+        ->and($isFraction('1'))->toBeFalse()
+        ->and($isFraction('1/2/3'))->toBeFalse()
+        ->and($isFraction('[1/2]'))->toBeFalse();
 });
 
 it('can use IsIntegerValidator', function (): void {
-    expect(resolve(Validators\IsIntegerValidator::class)('1'))->toBeTrue();
-    expect(resolve(Validators\IsIntegerValidator::class)('123'))->toBeTrue();
-    expect(resolve(Validators\IsIntegerValidator::class)('8312'))->toBeTrue();
+    $isInteger = resolve(Validators\IsIntegerValidator::class);
 
-    expect(resolve(Validators\IsIntegerValidator::class)('[8312]'))->toBeFalse();
-    expect(resolve(Validators\IsIntegerValidator::class)('[2]'))->toBeFalse();
-    expect(resolve(Validators\IsIntegerValidator::class)('[8312px]'))->toBeFalse();
-    expect(resolve(Validators\IsIntegerValidator::class)('[8312%]'))->toBeFalse();
-    expect(resolve(Validators\IsIntegerValidator::class)('[8312rem]'))->toBeFalse();
-    expect(resolve(Validators\IsIntegerValidator::class)('8312.2'))->toBeFalse();
-    expect(resolve(Validators\IsIntegerValidator::class)('1.2'))->toBeFalse();
-    expect(resolve(Validators\IsIntegerValidator::class)('one'))->toBeFalse();
-    expect(resolve(Validators\IsIntegerValidator::class)('1/2'))->toBeFalse();
-    expect(resolve(Validators\IsIntegerValidator::class)('1%'))->toBeFalse();
-    expect(resolve(Validators\IsIntegerValidator::class)('1px'))->toBeFalse();
+    expect($isInteger('1'))->toBeTrue()
+        ->and($isInteger('123'))->toBeTrue()
+        ->and($isInteger('8312'))->toBeTrue()
+        ->and($isInteger('[8312]'))->toBeFalse()
+        ->and($isInteger('[2]'))->toBeFalse()
+        ->and($isInteger('[8312px]'))->toBeFalse()
+        ->and($isInteger('[8312%]'))->toBeFalse()
+        ->and($isInteger('[8312rem]'))->toBeFalse()
+        ->and($isInteger('8312.2'))->toBeFalse()
+        ->and($isInteger('1.2'))->toBeFalse()
+        ->and($isInteger('one'))->toBeFalse()
+        ->and($isInteger('1/2'))->toBeFalse()
+        ->and($isInteger('1%'))->toBeFalse()
+        ->and($isInteger('1px'))->toBeFalse();
 });
 
 it('can use IsNumberValidator', function (): void {
-    expect(resolve(Validators\IsNumberValidator::class)('1'))->toBeTrue();
-    expect(resolve(Validators\IsNumberValidator::class)('123'))->toBeTrue();
-    expect(resolve(Validators\IsNumberValidator::class)('8312'))->toBeTrue();
-    expect(resolve(Validators\IsNumberValidator::class)('8312.2'))->toBeTrue();
-    expect(resolve(Validators\IsNumberValidator::class)('1.2'))->toBeTrue();
+    $isNumber = resolve(Validators\IsNumberValidator::class);
 
-    expect(resolve(Validators\IsNumberValidator::class)('[8312]'))->toBeFalse();
-    expect(resolve(Validators\IsNumberValidator::class)('[2]'))->toBeFalse();
-    expect(resolve(Validators\IsNumberValidator::class)('[8312px]'))->toBeFalse();
-    expect(resolve(Validators\IsNumberValidator::class)('[8312%]'))->toBeFalse();
-    expect(resolve(Validators\IsNumberValidator::class)('[8312rem]'))->toBeFalse();
-    expect(resolve(Validators\IsNumberValidator::class)('one'))->toBeFalse();
-    expect(resolve(Validators\IsNumberValidator::class)('1/2'))->toBeFalse();
-    expect(resolve(Validators\IsNumberValidator::class)('1%'))->toBeFalse();
-    expect(resolve(Validators\IsNumberValidator::class)('1px'))->toBeFalse();
+    expect($isNumber('1'))->toBeTrue()
+        ->and($isNumber('123'))->toBeTrue()
+        ->and($isNumber('8312'))->toBeTrue()
+        ->and($isNumber('8312.2'))->toBeTrue()
+        ->and($isNumber('1.2'))->toBeTrue()
+        ->and($isNumber('[8312]'))->toBeFalse()
+        ->and($isNumber('[2]'))->toBeFalse()
+        ->and($isNumber('[8312px]'))->toBeFalse()
+        ->and($isNumber('[8312%]'))->toBeFalse()
+        ->and($isNumber('[8312rem]'))->toBeFalse()
+        ->and($isNumber('one'))->toBeFalse()
+        ->and($isNumber('1/2'))->toBeFalse()
+        ->and($isNumber('1%'))->toBeFalse()
+        ->and($isNumber('1px'))->toBeFalse();
 });
 
 it('can use IsPercentValidator', function (): void {
-    expect(resolve(Validators\IsPercentValidator::class)('1%'))->toBeTrue();
-    expect(resolve(Validators\IsPercentValidator::class)('100.001%'))->toBeTrue();
-    expect(resolve(Validators\IsPercentValidator::class)('.01%'))->toBeTrue();
-    expect(resolve(Validators\IsPercentValidator::class)('0%'))->toBeTrue();
+    $isPercent = resolve(Validators\IsPercentValidator::class);
 
-    expect(resolve(Validators\IsPercentValidator::class)('0'))->toBeFalse();
-    expect(resolve(Validators\IsPercentValidator::class)('one%'))->toBeFalse();
+    expect($isPercent('1%'))->toBeTrue()
+        ->and($isPercent('100.001%'))->toBeTrue()
+        ->and($isPercent('.01%'))->toBeTrue()
+        ->and($isPercent('0%'))->toBeTrue()
+        ->and($isPercent('0'))->toBeFalse()
+        ->and($isPercent('one%'))->toBeFalse();
 });
 
 it('can use IsTshirtSizeValidator', function (): void {
-    expect(resolve(Validators\IsTshirtSizeValidator::class)('xs'))->toBeTrue();
-    expect(resolve(Validators\IsTshirtSizeValidator::class)('sm'))->toBeTrue();
-    expect(resolve(Validators\IsTshirtSizeValidator::class)('md'))->toBeTrue();
-    expect(resolve(Validators\IsTshirtSizeValidator::class)('lg'))->toBeTrue();
-    expect(resolve(Validators\IsTshirtSizeValidator::class)('xl'))->toBeTrue();
-    expect(resolve(Validators\IsTshirtSizeValidator::class)('2xl'))->toBeTrue();
-    expect(resolve(Validators\IsTshirtSizeValidator::class)('2.5xl'))->toBeTrue();
-    expect(resolve(Validators\IsTshirtSizeValidator::class)('10xl'))->toBeTrue();
-    expect(resolve(Validators\IsTshirtSizeValidator::class)('2xs'))->toBeTrue();
-    expect(resolve(Validators\IsTshirtSizeValidator::class)('2lg'))->toBeTrue();
+    $isTshirtSize = resolve(Validators\IsTshirtSizeValidator::class);
 
-    expect(resolve(Validators\IsTshirtSizeValidator::class)(''))->toBeFalse();
-    expect(resolve(Validators\IsTshirtSizeValidator::class)('hello'))->toBeFalse();
-    expect(resolve(Validators\IsTshirtSizeValidator::class)('1'))->toBeFalse();
-    expect(resolve(Validators\IsTshirtSizeValidator::class)('xl3'))->toBeFalse();
-    expect(resolve(Validators\IsTshirtSizeValidator::class)('2xl3'))->toBeFalse();
-    expect(resolve(Validators\IsTshirtSizeValidator::class)('-xl'))->toBeFalse();
-    expect(resolve(Validators\IsTshirtSizeValidator::class)('[sm]'))->toBeFalse();
+    expect($isTshirtSize('xs'))->toBeTrue()
+        ->and($isTshirtSize('sm'))->toBeTrue()
+        ->and($isTshirtSize('md'))->toBeTrue()
+        ->and($isTshirtSize('lg'))->toBeTrue()
+        ->and($isTshirtSize('xl'))->toBeTrue()
+        ->and($isTshirtSize('2xl'))->toBeTrue()
+        ->and($isTshirtSize('2.5xl'))->toBeTrue()
+        ->and($isTshirtSize('10xl'))->toBeTrue()
+        ->and($isTshirtSize('2xs'))->toBeTrue()
+        ->and($isTshirtSize('2lg'))->toBeTrue()
+        ->and($isTshirtSize(''))->toBeFalse()
+        ->and($isTshirtSize('hello'))->toBeFalse()
+        ->and($isTshirtSize('1'))->toBeFalse()
+        ->and($isTshirtSize('xl3'))->toBeFalse()
+        ->and($isTshirtSize('2xl3'))->toBeFalse()
+        ->and($isTshirtSize('-xl'))->toBeFalse()
+        ->and($isTshirtSize('[sm]'))->toBeFalse();
 });

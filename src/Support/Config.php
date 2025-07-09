@@ -16,7 +16,8 @@ class Config
      */
     public static function getMergedConfig(): array
     {
-        $config = self::getDefaultConfig();
+        /** @var array<string, mixed> $config */
+        $config = app('twMerge')->getDefaultConfig();
 
         foreach (self::$additionalConfig as $key => $additionalConfig) {
             $config[$key] = self::mergePropertyRecursively($config, $key, $additionalConfig);
@@ -26,27 +27,16 @@ class Config
     }
 
     /**
-     * @return array<string, mixed>
-     */
-    public static function getDefaultConfig(): array
-    {
-        return [
-            'cacheSize' => 500,
-            'prefix' => null,
-        ];
-    }
-
-    /**
-     * @param  array<string, mixed>  $config
-     * @param  array<string, mixed>|bool|float|int|string|null  $mergeValue
-     * @return array<string, mixed>|bool|float|int|string|null
+     * @param  array<string, mixed>  $baseConfig
+     * @return array<array-key, mixed>|list<string>|bool|float|int|string|null
      */
     protected static function mergePropertyRecursively(
         array $baseConfig,
         string $mergeKey,
-        array|bool|float|int|string|null $mergeValue
+        mixed $mergeValue
     ): array|bool|float|int|string|null {
         if ( ! array_key_exists($mergeKey, $baseConfig)) {
+            /** @var array<string, mixed> $mergeValue */
             return $mergeValue;
         }
         if (is_string($mergeValue)) {
@@ -59,7 +49,7 @@ class Config
             return $mergeValue;
         }
         if (null === $mergeValue) {
-            return $mergeValue;
+            return null;
         }
         if (
             is_array($mergeValue)
@@ -69,15 +59,21 @@ class Config
         ) {
             return [...$baseConfig[$mergeKey], ...$mergeValue];
         }
-        if (is_array($mergeValue) && ! array_is_list($mergeValue)) {
-            if (null === $baseConfig[$mergeKey]) {
+
+        /** @var ?array<array-key, mixed> $subBaseConfig */
+        $subBaseConfig = $baseConfig[$mergeKey] ?? null;
+
+        if (is_array($mergeValue) && ! array_is_list($subBaseConfig ?? [])) {
+            if (null === $subBaseConfig) {
                 return $mergeValue;
             }
+
             foreach ($mergeValue as $key => $value) {
-                $baseConfig[$mergeKey][$key] = self::mergePropertyRecursively($baseConfig[$mergeKey], $key, $value);
+                /** @var array<string, mixed> $subBaseConfig */
+                $subBaseConfig[$key] = self::mergePropertyRecursively($subBaseConfig, $key, $value);
             }
         }
 
-        return $baseConfig[$mergeKey];
+        return $subBaseConfig;
     }
 }
