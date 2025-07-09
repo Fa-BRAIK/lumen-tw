@@ -27,17 +27,10 @@ abstract class RegexValidator extends Validator
         $patterns = is_array($this->patterns) ? $this->patterns : [$this->patterns];
         $excludes = is_array($this->excludes) ? $this->excludes : [$this->excludes];
 
-        foreach ($patterns as $pattern) {
-            if (preg_match($pattern, $className)) {
-                foreach ($excludes as $exclude) {
-                    if (preg_match($exclude, $className)) {
-                        return false;
-                    }
-                }
-
-                return true;
-            }
+        if (array_any($patterns, fn ($pattern) => preg_match($pattern, $className))) {
+            return array_all($excludes, fn ($exclude) => ! preg_match($exclude, $className));
         }
+
 
         return false;
     }

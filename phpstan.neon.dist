@@ -2,8 +2,6 @@ includes:
     - phpstan-baseline.neon
 
 parameters:
-    ignoreErrors:
-        - identifier: method.templateTypeNotInParameter
     level: 10
     paths:
         - src

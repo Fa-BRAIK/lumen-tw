@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Lumen\TwMerge\Support\Validators;
 
 final class IsArbitraryVariableShadowValidator extends Validator

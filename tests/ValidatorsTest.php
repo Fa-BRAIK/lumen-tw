@@ -188,7 +188,7 @@ it('can use IsArbitraryVariableSizeValidator', function (): void {
 it('can use IsFractionValidator', function (): void {
     expect(resolve(Validators\IsFractionValidator::class)('1/2'))->toBeTrue();
     expect(resolve(Validators\IsFractionValidator::class)('123/209'))->toBeTrue();
-    
+
     expect(resolve(Validators\IsFractionValidator::class)('1'))->toBeFalse();
     expect(resolve(Validators\IsFractionValidator::class)('1/2/3'))->toBeFalse();
     expect(resolve(Validators\IsFractionValidator::class)('[1/2]'))->toBeFalse();
