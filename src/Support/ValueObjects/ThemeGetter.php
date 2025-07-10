@@ -22,8 +22,8 @@ class ThemeGetter
     }
 
     /**
-     * @param  array<string, array<string, mixed>>  $theme
-     * @return array<string, mixed>
+     * @param  array<string, array<array-key, mixed>>  $theme
+     * @return array<array-key, mixed>
      */
     public function get(array $theme): array
     {

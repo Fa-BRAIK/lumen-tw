@@ -7,7 +7,8 @@ namespace Lumen\TwMerge\Facades;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method array<string, mixed> getDefaultConfig()
+ * @method static array<string, mixed> getDefaultConfig()
+ * @method static array<string, mixed> getMergedConfig()
  *
  * @see \Lumen\TwMerge\TwMerge
  */
