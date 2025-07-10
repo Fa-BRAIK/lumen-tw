@@ -48,8 +48,8 @@ class TwMerge
      */
     public function getMergedConfig(): array
     {
-        if (null !== static::$mergedConfig) {
-            return static::$mergedConfig;
+        if (null !== self::$mergedConfig) {
+            return self::$mergedConfig;
         }
 
         $config = Config::getDefaultConfig();
@@ -62,7 +62,7 @@ class TwMerge
             );
         }
 
-        return static::$mergedConfig = $config;
+        return self::$mergedConfig = $config;
     }
 
     /**
@@ -71,6 +71,7 @@ class TwMerge
     public function withAdditionalConfig(array $additionalConfig): static
     {
         self::$additionalConfig = array_merge(self::$additionalConfig, $additionalConfig);
+        self::$mergedConfig = null; // Reset merged config to force re-merge on next call
 
         return $this;
     }

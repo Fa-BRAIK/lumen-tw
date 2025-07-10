@@ -29,7 +29,7 @@ class TwMergeServiceProvider extends PackageServiceProvider
      * @throws InvalidPackage
      */
     #[Override]
-    public function register()
+    public function register(): static
     {
         parent::register();
 
