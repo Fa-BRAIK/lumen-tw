@@ -1,0 +1,145 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Lumen\TwMerge\Support\Config;
+
+use Illuminate\Support\Arr;
+use Lumen\TwMerge\Support\Contracts\Config;
+use Lumen\TwMerge\Support\Contracts\ConfigGroupPart;
+
+/**
+ * @template TClassGroupIds of string
+ * @template TThemeGroupIds of string
+ *
+ * @phpstan-import-type ThemeObject from ConfigGroupPart
+ * @phpstan-import-type ClassGroup from ConfigGroupPart
+ *
+ * @phpstan-type PartialConfigGroupPart = array{
+ *     theme?: ThemeObject,
+ *     classGroups?: array<TClassGroupIds, ClassGroup>,
+ *     conflictingClassGroups?: array<TClassGroupIds, array<TClassGroupIds>>,
+ *     conflictingClassGroupModifiers?: array<TClassGroupIds, array<TClassGroupIds>>,
+ *     orderSensitiveModifiers?: array<string>,
+ * }
+ * @phpstan-type ConfigExtension = array{
+ *     cacheSize?: int,
+ *     prefix?: string,
+ *     override?: PartialConfigGroupPart,
+ *     extend?: PartialConfigGroupPart,
+ * }
+ */
+final readonly class Merger
+{
+    /**
+     * @param  Config<TClassGroupIds, TThemeGroupIds>  $config
+     * @param  ConfigExtension  $extension
+     * @return Config<TClassGroupIds, TThemeGroupIds>
+     */
+    public static function mergeConfig(Config $config, array $extension): Config
+    {
+        if (array_key_exists('cacheSize', $extension)) {
+            $config->setCacheSize($extension['cacheSize']);
+        }
+
+        if (array_key_exists('prefix', $extension)) {
+            $config->setPrefix($extension['prefix']);
+        }
+
+        if (array_key_exists('override', $extension)) {
+            self::overrideConfig($config, $extension['override']);
+        }
+
+        if (array_key_exists('extend', $extension)) {
+            self::extendConfig($config, $extension['extend']);
+        }
+
+        return $config;
+    }
+
+    /**
+     * @param  Config<TClassGroupIds, TThemeGroupIds>  $config
+     * @param  PartialConfigGroupPart  $override
+     */
+    private static function overrideConfig(Config &$config, array $override): void
+    {
+        foreach ($override as $key => $value) {
+            $functionName = 'set' . ucfirst($key);
+
+            if ( ! method_exists($config, $functionName)) {
+                continue;
+            }
+
+            $configValue = $config->{$key};
+
+            // If the dotted key ends with an integer, we need to group those values
+            // For example, if we end up with ['foo.bar.0' => 'value1', 'foo.bar.1' => 'value2'],
+            // we want to remove those keys and instead have ['foo.bar' => ['value1', 'value2']]
+            $undotted = Arr::undot($value);
+            foreach ($undotted as $dotKey => $dotValue) {
+                if (is_int($dotKey)) {
+                    $groupedKey = array_keys($configValue);
+                    $groupedKey = array_filter($groupedKey, 'is_int');
+
+                    if ( ! empty($groupedKey)) {
+                        $configValue[$dotKey] = $dotValue;
+                        unset($undotted[$dotKey]);
+                    }
+                }
+            }
+
+            foreach ($undotted as $dotKey => $dotValue) {
+                if (null === $dotValue) {
+                    continue;
+                }
+
+                Arr::set($configValue, $dotKey, $dotValue);
+            }
+
+            $config->{$functionName}($configValue); // @phpstan-ignore-line
+        }
+    }
+
+    /**
+     * @param  Config<TClassGroupIds, TThemeGroupIds>  $config
+     * @param  PartialConfigGroupPart  $extend
+     */
+    private static function extendConfig(Config &$config, array $extend): void
+    {
+        if (array_key_exists('theme', $extend)) {
+            // @phpstan-ignore-next-line
+            $config->setTheme(array_merge_recursive($config->theme, $extend['theme']));
+        }
+
+        if (array_key_exists('classGroups', $extend)) {
+            // @phpstan-ignore-next-line
+            $config->setClassGroups(array_merge_recursive(
+                $config->classGroups,
+                $extend['classGroups']
+            ));
+        }
+
+        if (array_key_exists('conflictingClassGroups', $extend)) {
+            // @phpstan-ignore-next-line
+            $config->setConflictingClassGroups(array_merge_recursive(
+                $config->conflictingClassGroups,
+                $extend['conflictingClassGroups']
+            ));
+        }
+
+        if (array_key_exists('conflictingClassGroupModifiers', $extend)) {
+            // @phpstan-ignore-next-line
+            $config->setConflictingClassGroupModifiers(array_merge_recursive(
+                $config->conflictingClassGroupModifiers,
+                $extend['conflictingClassGroupModifiers']
+            ));
+        }
+
+        if (array_key_exists('orderSensitiveModifiers', $extend)) {
+            $config->setOrderSensitiveModifiers(array_merge(
+                $config->orderSensitiveModifiers,
+                $extend['orderSensitiveModifiers']
+            ));
+        }
+    }
+}

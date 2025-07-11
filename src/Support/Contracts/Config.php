@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Lumen\TwMerge\Support\Contracts;
 
 /**
@@ -8,6 +10,4 @@ namespace Lumen\TwMerge\Support\Contracts;
  *
  * @extends ConfigGroupPart<TClassGroupIds, TThemeGroupIds>
  */
-interface Config extends ConfigGroupPart, ConfigStaticPart
-{
-}
+interface Config extends ConfigGroupPart, ConfigStaticPart {}

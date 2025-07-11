@@ -24,7 +24,7 @@ final class Config implements ConfigContract
     /**
      * @template TClassGroupIds of string
      */
-    protected function __construct(
+    public function __construct(
         protected(set) ?int $cacheSize = null,
         protected(set) ?string $prefix = null,
 
@@ -52,8 +52,7 @@ final class Config implements ConfigContract
          * @var array<string>
          */
         protected(set) array $orderSensitiveModifiers = [],
-    ) {
-    }
+    ) {}
 
     /**
      * @return ConfigContract<string, string>
@@ -4399,5 +4398,69 @@ final class Config implements ConfigContract
                 'selection',
             ]
         );
+    }
+
+    public function setCacheSize(?int $cacheSize): self
+    {
+        $this->cacheSize = $cacheSize;
+
+        return $this;
+    }
+
+    public function setPrefix(?string $prefix): self
+    {
+        $this->prefix = $prefix;
+
+        return $this;
+    }
+
+    /**
+     * @param  array<string, ClassGroup>  $classGroups
+     */
+    public function setClassGroups(array $classGroups): self
+    {
+        $this->classGroups = $classGroups;
+
+        return $this;
+    }
+
+    /**
+     * @param  ThemeObject  $theme
+     */
+    public function setTheme(array $theme): self
+    {
+        $this->theme = $theme;
+
+        return $this;
+    }
+
+    /**
+     * @param  array<string, array<string>>  $conflictingClassGroups
+     */
+    public function setConflictingClassGroups(array $conflictingClassGroups): self
+    {
+        $this->conflictingClassGroups = $conflictingClassGroups;
+
+        return $this;
+    }
+
+    /**
+     * @param  array<string, array<string>>  $conflictingClassGroupModifiers
+     */
+    public function setConflictingClassGroupModifiers(array $conflictingClassGroupModifiers): self
+    {
+        $this->conflictingClassGroupModifiers = $conflictingClassGroupModifiers;
+
+        return $this;
+    }
+
+    /**
+     * @param  array<string>  $orderSensitiveModifiers
+     */
+    public function setOrderSensitiveModifiers(array $orderSensitiveModifiers): self
+    {
+        $this->orderSensitiveModifiers = $orderSensitiveModifiers;
+
+        return $this;
     }
 }

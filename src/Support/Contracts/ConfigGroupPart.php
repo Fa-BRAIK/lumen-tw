@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Lumen\TwMerge\Support\Contracts;
 
 use Lumen\TwMerge\Support\ValueObjects\ThemeGetter;
-use Lumen\TwMerge\Support\Contracts\ClassValidator;
 
 /**
  * The dynamic part of the tailwind-merge configuration.
@@ -78,4 +79,34 @@ interface ConfigGroupPart
      * @var array<string>
      */
     public array $orderSensitiveModifiers { get; }
+
+    /**
+     * @param  array<TClassGroupIds, ClassGroup>  $classGroups
+     * @return ConfigGroupPart<TClassGroupIds, TThemeGroupIds>
+     */
+    public function setClassGroups(array $classGroups): ConfigGroupPart;
+
+    /**
+     * @param  ThemeObject  $theme
+     * @return ConfigGroupPart<TClassGroupIds, TThemeGroupIds>
+     */
+    public function setTheme(array $theme): ConfigGroupPart;
+
+    /**
+     * @param  array<TClassGroupIds, array<TClassGroupIds>>  $conflictingClassGroups
+     * @return ConfigGroupPart<TClassGroupIds, TThemeGroupIds>
+     */
+    public function setConflictingClassGroups(array $conflictingClassGroups): ConfigGroupPart;
+
+    /**
+     * @param  array<TClassGroupIds, array<TClassGroupIds>>  $conflictingClassGroupModifiers
+     * @return ConfigGroupPart<TClassGroupIds, TThemeGroupIds>
+     */
+    public function setConflictingClassGroupModifiers(array $conflictingClassGroupModifiers): ConfigGroupPart;
+
+    /**
+     * @param  array<string>  $orderSensitiveModifiers
+     * @return ConfigGroupPart<TClassGroupIds, TThemeGroupIds>
+     */
+    public function setOrderSensitiveModifiers(array $orderSensitiveModifiers): ConfigGroupPart;
 }

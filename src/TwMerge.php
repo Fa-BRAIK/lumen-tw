@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Lumen\TwMerge;
 
 use Closure;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Contracts\Cache\Repository as CacheRepository;
+use Illuminate\Support\Facades\Cache;
 use Lumen\TwMerge\Support\Config;
 use Lumen\TwMerge\Support\Contracts\Config as ConfigContract;
 
