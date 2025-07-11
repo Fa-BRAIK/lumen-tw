@@ -106,40 +106,21 @@ final readonly class Merger
      */
     private static function extendConfig(Config &$config, array $extend): void
     {
-        if (array_key_exists('theme', $extend)) {
-            // @phpstan-ignore-next-line
-            $config->setTheme(array_merge_recursive($config->theme, $extend['theme']));
-        }
+        foreach ($extend as $key => $value) {
+            $functionName = 'set' . ucfirst($key);
 
-        if (array_key_exists('classGroups', $extend)) {
-            // @phpstan-ignore-next-line
-            $config->setClassGroups(array_merge_recursive(
-                $config->classGroups,
-                $extend['classGroups']
-            ));
-        }
+            if ( ! method_exists($config, $functionName)) {
+                continue;
+            }
 
-        if (array_key_exists('conflictingClassGroups', $extend)) {
-            // @phpstan-ignore-next-line
-            $config->setConflictingClassGroups(array_merge_recursive(
-                $config->conflictingClassGroups,
-                $extend['conflictingClassGroups']
-            ));
-        }
+            $mergeFunction = match($key) {
+                'orderSensitiveModifiers' => 'array_merge',
+                default => 'array_merge_recursive'
+            };
 
-        if (array_key_exists('conflictingClassGroupModifiers', $extend)) {
-            // @phpstan-ignore-next-line
-            $config->setConflictingClassGroupModifiers(array_merge_recursive(
-                $config->conflictingClassGroupModifiers,
-                $extend['conflictingClassGroupModifiers']
-            ));
-        }
-
-        if (array_key_exists('orderSensitiveModifiers', $extend)) {
-            $config->setOrderSensitiveModifiers(array_merge(
-                $config->orderSensitiveModifiers,
-                $extend['orderSensitiveModifiers']
-            ));
+            $config->{$functionName}(
+                $mergeFunction($config->{$key}, $value) // @phpstan-ignore-line
+            );
         }
     }
 }
