@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace Lumen\TwMerge\Facades;
 
 use Illuminate\Support\Facades\Facade;
+use Lumen\TwMerge\Support\Contracts\Config as ConfigContract;
 
 /**
+ * @method ConfigContract<string, string> getDefaultConfig()
+ *
  * @see \Lumen\TwMerge\TwMerge
  */
 class TwMerge extends Facade

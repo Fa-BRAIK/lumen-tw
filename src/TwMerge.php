@@ -8,23 +8,16 @@ use Closure;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Contracts\Cache\Repository as CacheRepository;
 use Lumen\TwMerge\Support\Config;
+use Lumen\TwMerge\Support\Contracts\Config as ConfigContract;
 
 class TwMerge
 {
     protected ?CacheRepository $cache = null;
 
     /**
-     * @return array{
-     *     cacheSize: int|null,
-     *     prefix: string|null,
-     *     theme: array<string, array<array-key, mixed>>,
-     *     classGroups: array<string, array<array-key, mixed>>,
-     *     conflictingClassGroups: array<string, array<array-key, mixed>>,
-     *     conflictingClassGroupModifiers: array<string, array<array-key, mixed>>,
-     *     orderSensitiveModifiers: array<string>
-     * }
+     * @return ConfigContract<string, string>
      */
-    public function getDefaultConfig(): array
+    public function getDefaultConfig(): ConfigContract
     {
         return Config::getDefaultConfig();
     }

@@ -4,37 +4,64 @@ declare(strict_types=1);
 
 namespace Lumen\TwMerge\Support;
 
+use Lumen\TwMerge\Support\Contracts\Config as ConfigContract;
+use Lumen\TwMerge\Support\Contracts\ConfigGroupPart;
 use Lumen\TwMerge\Support\ValueObjects\ThemeGetter;
 
-class Config
+/**
+ * @implements ConfigContract<string, string>
+ *
+ * @phpstan-import-type ThemeObject from ConfigGroupPart
+ * @phpstan-import-type ClassGroup from ConfigGroupPart
+ */
+final class Config implements ConfigContract
 {
-    /** @var ?array{
-     *      cacheSize: int|null,
-     *      prefix: string|null,
-     *      theme: array<string, array<array-key, mixed>>,
-     *      classGroups: array<string, array<array-key, mixed>>,
-     *      conflictingClassGroups: array<string, array<array-key, mixed>>,
-     *      conflictingClassGroupModifiers: array<string, array<array-key, mixed>>,
-     *      orderSensitiveModifiers: array<string>
-     * }
+    /**
+     * @var ?ConfigContract<string, string>
      */
-    protected static ?array $config = null;
+    protected static ?ConfigContract $defaultConfig = null;
 
     /**
-     * @return array{
-     *     cacheSize: int|null,
-     *     prefix: string|null,
-     *     theme: array<string, array<array-key, mixed>>,
-     *     classGroups: array<string, array<array-key, mixed>>,
-     *     conflictingClassGroups: array<string, array<array-key, mixed>>,
-     *     conflictingClassGroupModifiers: array<string, array<array-key, mixed>>,
-     *     orderSensitiveModifiers: array<string>
-     * }
+     * @template TClassGroupIds of string
      */
-    public static function getDefaultConfig(): array
+    protected function __construct(
+        protected(set) ?int $cacheSize = null,
+        protected(set) ?string $prefix = null,
+
+        /**
+         * @var ThemeObject
+         */
+        protected(set) array $theme = [],
+
+        /**
+         * @var array<TClassGroupIds, ClassGroup>
+         */
+        protected(set) array $classGroups = [],
+
+        /**
+         * @var array<TClassGroupIds, array<TClassGroupIds>>
+         */
+        protected(set) array $conflictingClassGroups = [],
+
+        /**
+         * @var array<TClassGroupIds, array<TClassGroupIds>>
+         */
+        protected(set) array $conflictingClassGroupModifiers = [],
+
+        /**
+         * @var array<string>
+         */
+        protected(set) array $orderSensitiveModifiers = [],
+    ) {
+    }
+
+    /**
+     * @return ConfigContract<string, string>
+     */
+    public static function getDefaultConfig(): ConfigContract
     {
-        if (null !== static::$config) {
-            return static::$config;
+        if (null !== self::$defaultConfig) {
+            return self::$defaultConfig;
         }
 
         $themeColor = ThemeGetter::fromTheme('color');
@@ -293,41 +320,44 @@ class Config
         /** @var ?string $prefix */
         $prefix = config('lumen-tw.prefix', '');
 
-        return static::$config = [
-            'cacheSize' => $cacheSize,
-            'prefix' => $prefix,
-            'theme' => [
-                'animate' => ['spin', 'ping', 'pulse', 'bounce'],
-                'aspect' => ['video'],
-                'blur' => [$isTshirtSize(...)],
-                'breakpoint' => [$isTshirtSize(...)],
-                'color' => [$isAny(...)],
-                'container' => [$isTshirtSize(...)],
-                'drop-shadow' => [$isTshirtSize(...)],
-                'ease' => ['in', 'out', 'in-out'],
-                'font' => [$isNonArbitrary(...)],
-                'font-weight' => [
-                    'thin',
-                    'extralight',
-                    'light',
-                    'normal',
-                    'medium',
-                    'semibold',
-                    'bold',
-                    'extrabold',
-                    'black',
-                ],
-                'inset-shadow' => [$isTshirtSize(...)],
-                'leading' => ['none', 'tight', 'snug', 'normal', 'relaxed', 'loose'],
-                'perspective' => ['dramatic', 'near', 'normal', 'midrange', 'distant', 'none'],
-                'radius' => [$isTshirtSize(...)],
-                'shadow' => [$isTshirtSize(...)],
-                'spacing' => ['px', $isNumber(...)],
-                'text' => [$isTshirtSize(...)],
-                'text-shadow' => [$isTshirtSize(...)],
-                'tracking' => ['tighter', 'tight', 'normal', 'wide', 'wider', 'widest'],
+        /** @var ThemeObject $theme */
+        $theme = [
+            'animate' => ['spin', 'ping', 'pulse', 'bounce'],
+            'aspect' => ['video'],
+            'blur' => [$isTshirtSize(...)],
+            'breakpoint' => [$isTshirtSize(...)],
+            'color' => [$isAny(...)],
+            'container' => [$isTshirtSize(...)],
+            'drop-shadow' => [$isTshirtSize(...)],
+            'ease' => ['in', 'out', 'in-out'],
+            'font' => [$isNonArbitrary(...)],
+            'font-weight' => [
+                'thin',
+                'extralight',
+                'light',
+                'normal',
+                'medium',
+                'semibold',
+                'bold',
+                'extrabold',
+                'black',
             ],
-            'classGroups' => [
+            'inset-shadow' => [$isTshirtSize(...)],
+            'leading' => ['none', 'tight', 'snug', 'normal', 'relaxed', 'loose'],
+            'perspective' => ['dramatic', 'near', 'normal', 'midrange', 'distant', 'none'],
+            'radius' => [$isTshirtSize(...)],
+            'shadow' => [$isTshirtSize(...)],
+            'spacing' => ['px', $isNumber(...)],
+            'text' => [$isTshirtSize(...)],
+            'text-shadow' => [$isTshirtSize(...)],
+            'tracking' => ['tighter', 'tight', 'normal', 'wide', 'wider', 'widest'],
+        ];
+
+        return self::$defaultConfig = new self(
+            cacheSize: $cacheSize,
+            prefix: $prefix,
+            theme: $theme,
+            classGroups: [
                 // --------------
                 // --- Layout ---
                 // --------------
@@ -4244,7 +4274,7 @@ class Config
                     ],
                 ],
             ],
-            'conflictingClassGroups' => [
+            conflictingClassGroups: [
                 'overflow' => ['overflow-x', 'overflow-y'],
                 'overscroll' => ['overscroll-x', 'overscroll-y'],
                 'inset' => ['inset-x', 'inset-y', 'start', 'end', 'top', 'right', 'bottom', 'left'],
@@ -4351,10 +4381,10 @@ class Config
                 'touch-y' => ['touch'],
                 'touch-pz' => ['touch'],
             ],
-            'conflictingClassGroupModifiers' => [
+            conflictingClassGroupModifiers: [
                 'font-size' => ['leading'],
             ],
-            'orderSensitiveModifiers' => [
+            orderSensitiveModifiers: [
                 '*',
                 '**',
                 'after',
@@ -4367,58 +4397,7 @@ class Config
                 'marker',
                 'placeholder',
                 'selection',
-            ],
-        ];
-    }
-
-    /**
-     * @param  array<string, mixed>  $baseConfig
-     * @return array<array-key, mixed>|list<string>|bool|float|int|string|null
-     */
-    public static function mergePropertyRecursively(
-        array $baseConfig,
-        string $mergeKey,
-        mixed $mergeValue
-    ): array|bool|float|int|string|null {
-        if ( ! array_key_exists($mergeKey, $baseConfig)) {
-            /** @var array<string, mixed> $mergeValue */
-            return $mergeValue;
-        }
-        if (is_string($mergeValue)) {
-            return $mergeValue;
-        }
-        if (is_numeric($mergeValue)) {
-            return $mergeValue;
-        }
-        if (is_bool($mergeValue)) {
-            return $mergeValue;
-        }
-        if (null === $mergeValue) {
-            return null;
-        }
-        if (
-            is_array($mergeValue)
-            && array_is_list($mergeValue)
-            && is_array($baseConfig[$mergeKey])
-            && array_is_list($baseConfig[$mergeKey])
-        ) {
-            return [...$baseConfig[$mergeKey], ...$mergeValue];
-        }
-
-        /** @var ?array<array-key, mixed> $subBaseConfig */
-        $subBaseConfig = $baseConfig[$mergeKey] ?? null;
-
-        if (is_array($mergeValue) && ! array_is_list($subBaseConfig ?? [])) {
-            if (null === $subBaseConfig) {
-                return $mergeValue;
-            }
-
-            foreach ($mergeValue as $key => $value) {
-                /** @var array<string, mixed> $subBaseConfig */
-                $subBaseConfig[$key] = self::mergePropertyRecursively($subBaseConfig, $key, $value);
-            }
-        }
-
-        return $subBaseConfig;
+            ]
+        );
     }
 }
