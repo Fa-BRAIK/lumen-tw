@@ -65,7 +65,7 @@ it('can merge config', function (): void {
             ],
         ]
     ))
-        ->toBeinstanceOf(Config::class)
+        ->toBeInstanceOf(Config::class)
         ->toHaveProperty('cacheSize', 100)
         ->toHaveProperty('prefix', null)
         ->and($mergedConfig->theme)
