@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Lumen\TwMerge\Support\Contracts;
 
-use Lumen\TwMerge\Support\ValueObjects\ThemeGetter;
+use Lumen\TwMerge\Support\ThemeGetter;
 
 /**
  * The dynamic part of the tailwind-merge configuration.

@@ -6,7 +6,6 @@ namespace Lumen\TwMerge\Support;
 
 use Lumen\TwMerge\Support\Contracts\Config as ConfigContract;
 use Lumen\TwMerge\Support\Contracts\ConfigGroupPart;
-use Lumen\TwMerge\Support\ValueObjects\ThemeGetter;
 
 /**
  * @implements ConfigContract<string, string>
@@ -127,51 +126,51 @@ final class Config implements ConfigContract
         ];
         $scalePositionWithArbitrary = static fn () => [
             ...$scalePosition(),
-            $isArbitraryVariable(...),
-            $isArbitraryValue(...),
+            $isArbitraryVariable,
+            $isArbitraryValue,
         ];
         $scaleOverflow = static fn () => ['auto', 'hidden', 'clip', 'visible', 'scroll'];
         $scaleOverscroll = static fn () => ['auto', 'contain', 'none'];
         $scaleUnambiguousSpacing = static fn () => [
-            $isArbitraryVariable(...),
-            $isArbitraryValue(...),
+            $isArbitraryVariable,
+            $isArbitraryValue,
             $themeSpacing,
         ];
-        $scaleInset = static fn () => [$isFraction(...), 'full', 'auto', ...$scaleUnambiguousSpacing()];
+        $scaleInset = static fn () => [$isFraction, 'full', 'auto', ...$scaleUnambiguousSpacing()];
         $scaleGridTemplateColsRows = static fn () => [
-            $isInteger(...),
+            $isInteger,
             'none',
             'subgrid',
-            $isArbitraryVariable(...),
-            $isArbitraryValue(...),
+            $isArbitraryVariable,
+            $isArbitraryValue,
         ];
         $scaleGridColRowStartAndEnd = static fn () => [
             'auto',
             [
                 'span' => [
                     'full',
-                    $isInteger(...),
-                    $isArbitraryVariable(...),
-                    $isArbitraryValue(...),
+                    $isInteger,
+                    $isArbitraryVariable,
+                    $isArbitraryValue,
                 ],
             ],
-            $isInteger(...),
-            $isArbitraryVariable(...),
-            $isArbitraryValue(...),
+            $isInteger,
+            $isArbitraryVariable,
+            $isArbitraryValue,
         ];
         $scaleGridColRowStartOrEnd = static fn () => [
-            $isInteger(...),
+            $isInteger,
             'auto',
-            $isArbitraryVariable(...),
-            $isArbitraryValue(...),
+            $isArbitraryVariable,
+            $isArbitraryValue,
         ];
         $scaleGridAutoColsRows = static fn () => [
             'auto',
             'min',
             'max',
             'fr',
-            $isArbitraryVariable(...),
-            $isArbitraryValue(...),
+            $isArbitraryVariable,
+            $isArbitraryValue,
         ];
         $scaleAlignPrimaryAxis = static fn () => [
             'start',
@@ -188,7 +187,7 @@ final class Config implements ConfigContract
         $scaleAlignSecondaryAxis = static fn () => ['start', 'end', 'center', 'stretch', 'center-safe', 'end-safe'];
         $scaleMargin = static fn () => ['auto', ...$scaleUnambiguousSpacing()];
         $scaleSizing = static fn () => [
-            $isFraction(...),
+            $isFraction,
             'auto',
             'full',
             'dvw',
@@ -204,17 +203,17 @@ final class Config implements ConfigContract
         ];
         $scaleColor = static fn () => [
             $themeColor,
-            $isArbitraryVariable(...),
-            $isArbitraryValue(...),
+            $isArbitraryVariable,
+            $isArbitraryValue,
         ];
         $scaleBgPosition = static fn () => [
             ...$scalePosition(),
-            $isArbitraryVariablePosition(...),
-            $isArbitraryPosition(...),
+            $isArbitraryVariablePosition,
+            $isArbitraryPosition,
             [
                 'position' => [
-                    $isArbitraryVariable(...),
-                    $isArbitraryValue(...),
+                    $isArbitraryVariable,
+                    $isArbitraryValue,
                 ],
             ],
         ];
@@ -228,19 +227,19 @@ final class Config implements ConfigContract
             'auto',
             'cover',
             'contain',
-            $isArbitraryVariableSize(...),
-            $isArbitrarySize(...),
+            $isArbitraryVariableSize,
+            $isArbitrarySize,
             [
                 'size' => [
-                    $isArbitraryVariable(...),
-                    $isArbitraryValue(...),
+                    $isArbitraryVariable,
+                    $isArbitraryValue,
                 ],
             ],
         ];
         $scaleGradientStopPosition = static fn () => [
-            $isPercent(...),
-            $isArbitraryVariableLength(...),
-            $isArbitraryLength(...),
+            $isPercent,
+            $isArbitraryVariableLength,
+            $isArbitraryLength,
         ];
         $scaleRadius = static fn () => [
             // Deprecated since Tailwind CSS v4.0.0
@@ -248,14 +247,14 @@ final class Config implements ConfigContract
             'none',
             'full',
             $themeRadius,
-            $isArbitraryVariable(...),
-            $isArbitraryValue(...),
+            $isArbitraryVariable,
+            $isArbitraryValue,
         ];
         $scaleBorderWidth = static fn () => [
             '',
-            $isNumber(...),
-            $isArbitraryVariableLength(...),
-            $isArbitraryLength(...),
+            $isNumber,
+            $isArbitraryVariableLength,
+            $isArbitraryLength,
         ];
         $scaleLineStyle = static fn () => ['solid', 'dashed', 'dotted', 'double'];
         $scaleBlendMode = static fn () => [
@@ -277,38 +276,38 @@ final class Config implements ConfigContract
             'luminosity',
         ];
         $scaleMaskImagePosition = static fn () => [
-            $isNumber(...),
-            $isPercent(...),
-            $isArbitraryVariablePosition(...),
-            $isArbitraryPosition(...),
+            $isNumber,
+            $isPercent,
+            $isArbitraryVariablePosition,
+            $isArbitraryPosition,
         ];
         $scaleBlur = static fn () => [
             // Deprecated since Tailwind CSS v4.0.0
             '',
             'none',
             $themeBlur,
-            $isArbitraryVariable(...),
-            $isArbitraryValue(...),
+            $isArbitraryVariable,
+            $isArbitraryValue,
         ];
         $scaleRotate = static fn () => [
             'none',
-            $isNumber(...),
-            $isArbitraryVariable(...),
-            $isArbitraryValue(...),
+            $isNumber,
+            $isArbitraryVariable,
+            $isArbitraryValue,
         ];
         $scaleScale = static fn () => [
             'none',
-            $isNumber(...),
-            $isArbitraryVariable(...),
-            $isArbitraryValue(...),
+            $isNumber,
+            $isArbitraryVariable,
+            $isArbitraryValue,
         ];
         $scaleSkew = static fn () => [
-            $isNumber(...),
-            $isArbitraryVariable(...),
-            $isArbitraryValue(...),
+            $isNumber,
+            $isArbitraryVariable,
+            $isArbitraryValue,
         ];
         $scaleTranslate = static fn () => [
-            $isFraction(...),
+            $isFraction,
             'full',
             ...$scaleUnambiguousSpacing(),
         ];
@@ -323,13 +322,13 @@ final class Config implements ConfigContract
         $theme = [
             'animate' => ['spin', 'ping', 'pulse', 'bounce'],
             'aspect' => ['video'],
-            'blur' => [$isTshirtSize(...)],
-            'breakpoint' => [$isTshirtSize(...)],
-            'color' => [$isAny(...)],
-            'container' => [$isTshirtSize(...)],
-            'drop-shadow' => [$isTshirtSize(...)],
+            'blur' => [$isTshirtSize],
+            'breakpoint' => [$isTshirtSize],
+            'color' => [$isAny],
+            'container' => [$isTshirtSize],
+            'drop-shadow' => [$isTshirtSize],
             'ease' => ['in', 'out', 'in-out'],
-            'font' => [$isNonArbitrary(...)],
+            'font' => [$isNonArbitrary],
             'font-weight' => [
                 'thin',
                 'extralight',
@@ -341,14 +340,14 @@ final class Config implements ConfigContract
                 'extrabold',
                 'black',
             ],
-            'inset-shadow' => [$isTshirtSize(...)],
+            'inset-shadow' => [$isTshirtSize],
             'leading' => ['none', 'tight', 'snug', 'normal', 'relaxed', 'loose'],
             'perspective' => ['dramatic', 'near', 'normal', 'midrange', 'distant', 'none'],
-            'radius' => [$isTshirtSize(...)],
-            'shadow' => [$isTshirtSize(...)],
-            'spacing' => ['px', $isNumber(...)],
-            'text' => [$isTshirtSize(...)],
-            'text-shadow' => [$isTshirtSize(...)],
+            'radius' => [$isTshirtSize],
+            'shadow' => [$isTshirtSize],
+            'spacing' => ['px', $isNumber],
+            'text' => [$isTshirtSize],
+            'text-shadow' => [$isTshirtSize],
             'tracking' => ['tighter', 'tight', 'normal', 'wide', 'wider', 'widest'],
         ];
 
@@ -371,9 +370,9 @@ final class Config implements ConfigContract
                         'aspect' => [
                             'auto',
                             'square',
-                            $isFraction(...),
-                            $isArbitraryValue(...),
-                            $isArbitraryVariable(...),
+                            $isFraction,
+                            $isArbitraryValue,
+                            $isArbitraryVariable,
                             $themeAspect,
                         ],
                     ],
@@ -395,9 +394,9 @@ final class Config implements ConfigContract
                 'columns' => [
                     [
                         'columns' => [
-                            $isNumber(...),
-                            $isArbitraryValue(...),
-                            $isArbitraryVariable(...),
+                            $isNumber,
+                            $isArbitraryValue,
+                            $isArbitraryVariable,
                             $themeContainer,
                         ],
                     ],
@@ -732,10 +731,10 @@ final class Config implements ConfigContract
                 'z' => [
                     [
                         'z' => [
-                            $isInteger(...),
+                            $isInteger,
                             'auto',
-                            $isArbitraryVariable(...),
-                            $isArbitraryValue(...),
+                            $isArbitraryVariable,
+                            $isArbitraryValue,
                         ],
                     ],
                 ],
@@ -752,7 +751,7 @@ final class Config implements ConfigContract
                 'basis' => [
                     [
                         'basis' => [
-                            $isFraction(...),
+                            $isFraction,
                             'full',
                             'auto',
                             $themeContainer,
@@ -791,12 +790,12 @@ final class Config implements ConfigContract
                 'flex' => [
                     [
                         'flex' => [
-                            $isNumber(...),
-                            $isFraction(...),
+                            $isNumber,
+                            $isFraction,
                             'auto',
                             'initial',
                             'none',
-                            $isArbitraryValue(...),
+                            $isArbitraryValue,
                         ],
                     ],
                 ],
@@ -810,9 +809,9 @@ final class Config implements ConfigContract
                     [
                         'grow' => [
                             '',
-                            $isNumber(...),
-                            $isArbitraryVariable(...),
-                            $isArbitraryValue(...),
+                            $isNumber,
+                            $isArbitraryVariable,
+                            $isArbitraryValue,
                         ],
                     ],
                 ],
@@ -826,9 +825,9 @@ final class Config implements ConfigContract
                     [
                         'shrink' => [
                             '',
-                            $isNumber(...),
-                            $isArbitraryVariable(...),
-                            $isArbitraryValue(...),
+                            $isNumber,
+                            $isArbitraryVariable,
+                            $isArbitraryValue,
                         ],
                     ],
                 ],
@@ -841,12 +840,12 @@ final class Config implements ConfigContract
                 'order' => [
                     [
                         'order' => [
-                            $isInteger(...),
+                            $isInteger,
                             'first',
                             'last',
                             'none',
-                            $isArbitraryVariable(...),
-                            $isArbitraryValue(...),
+                            $isArbitraryVariable,
+                            $isArbitraryValue,
                         ],
                     ],
                 ],
@@ -1472,8 +1471,8 @@ final class Config implements ConfigContract
                         'text' => [
                             'base',
                             $themeText,
-                            $isArbitraryVariableLength(...),
-                            $isArbitraryLength(...),
+                            $isArbitraryVariableLength,
+                            $isArbitraryLength,
                         ],
                     ],
                 ],
@@ -1501,8 +1500,8 @@ final class Config implements ConfigContract
                     [
                         'font' => [
                             $themeFontWeight,
-                            $isArbitraryVariable(...),
-                            $isArbitraryNumber(...),
+                            $isArbitraryVariable,
+                            $isArbitraryNumber,
                         ],
                     ],
                 ],
@@ -1524,8 +1523,8 @@ final class Config implements ConfigContract
                             'expanded',
                             'extra-expanded',
                             'ultra-expanded',
-                            $isPercent(...),
-                            $isArbitraryValue(...),
+                            $isPercent,
+                            $isArbitraryValue,
                         ],
                     ],
                 ],
@@ -1538,8 +1537,8 @@ final class Config implements ConfigContract
                 'font-family' => [
                     [
                         'font' => [
-                            $isArbitraryVariableFamilyName(...),
-                            $isArbitraryValue(...),
+                            $isArbitraryVariableFamilyName,
+                            $isArbitraryValue,
                             $themeFont,
                         ],
                     ],
@@ -1596,8 +1595,8 @@ final class Config implements ConfigContract
                     [
                         'tracking' => [
                             $themeTracking,
-                            $isArbitraryVariable(...),
-                            $isArbitraryValue(...),
+                            $isArbitraryVariable,
+                            $isArbitraryValue,
                         ],
                     ],
                 ],
@@ -1610,10 +1609,10 @@ final class Config implements ConfigContract
                 'line-clamp' => [
                     [
                         'line-clamp' => [
-                            $isNumber(...),
+                            $isNumber,
                             'none',
-                            $isArbitraryVariable(...),
-                            $isArbitraryNumber(...),
+                            $isArbitraryVariable,
+                            $isArbitraryNumber,
                         ],
                     ],
                 ],
@@ -1641,8 +1640,8 @@ final class Config implements ConfigContract
                     [
                         'list-image' => [
                             'none',
-                            $isArbitraryVariable(...),
-                            $isArbitraryValue(...),
+                            $isArbitraryVariable,
+                            $isArbitraryValue,
                         ],
                     ],
                 ],
@@ -1669,8 +1668,8 @@ final class Config implements ConfigContract
                             'disc',
                             'decimal',
                             'none',
-                            $isArbitraryVariable(...),
-                            $isArbitraryValue(...),
+                            $isArbitraryVariable,
+                            $isArbitraryValue,
                         ],
                     ],
                 ],
@@ -1735,11 +1734,11 @@ final class Config implements ConfigContract
                 'text-decoration-thickness' => [
                     [
                         'decoration' => [
-                            $isNumber(...),
+                            $isNumber,
                             'from-font',
                             'auto',
-                            $isArbitraryVariable(...),
-                            $isArbitraryLength(...),
+                            $isArbitraryVariable,
+                            $isArbitraryLength,
                         ],
                     ],
                 ],
@@ -1763,10 +1762,10 @@ final class Config implements ConfigContract
                 'underline-offset' => [
                     [
                         'underline-offset' => [
-                            $isNumber(...),
+                            $isNumber,
                             'auto',
-                            $isArbitraryVariable(...),
-                            $isArbitraryValue(...),
+                            $isArbitraryVariable,
+                            $isArbitraryValue,
                         ],
                     ],
                 ],
@@ -1823,8 +1822,8 @@ final class Config implements ConfigContract
                             'text-bottom',
                             'sub',
                             'super',
-                            $isArbitraryVariable(...),
-                            $isArbitraryValue(...),
+                            $isArbitraryVariable,
+                            $isArbitraryValue,
                         ],
                     ],
                 ],
@@ -1882,8 +1881,8 @@ final class Config implements ConfigContract
                     [
                         'content' => [
                             'none',
-                            $isArbitraryVariable(...),
-                            $isArbitraryValue(...),
+                            $isArbitraryVariable,
+                            $isArbitraryValue,
                         ],
                     ],
                 ],
@@ -1972,27 +1971,27 @@ final class Config implements ConfigContract
                                     [
                                         'to' => ['t', 'tr', 'r', 'br', 'b', 'bl', 'l', 'tl'],
                                     ],
-                                    $isInteger(...),
-                                    $isArbitraryVariable(...),
-                                    $isArbitraryValue(...),
+                                    $isInteger,
+                                    $isArbitraryVariable,
+                                    $isArbitraryValue,
                                 ],
                             ],
                             [
                                 'radial' => [
                                     '',
-                                    $isArbitraryVariable(...),
-                                    $isArbitraryValue(...),
+                                    $isArbitraryVariable,
+                                    $isArbitraryValue,
                                 ],
                             ],
                             [
                                 'conic' => [
-                                    $isInteger(...),
-                                    $isArbitraryVariable(...),
-                                    $isArbitraryValue(...),
+                                    $isInteger,
+                                    $isArbitraryVariable,
+                                    $isArbitraryValue,
                                 ],
                             ],
-                            $isArbitraryVariableImage(...),
-                            $isArbitraryImage(...),
+                            $isArbitraryVariableImage,
+                            $isArbitraryImage,
                         ],
                     ],
                 ],
@@ -2529,9 +2528,9 @@ final class Config implements ConfigContract
                 'outline-offset' => [
                     [
                         'outline-offset' => [
-                            $isNumber(...),
-                            $isArbitraryVariable(...),
-                            $isArbitraryValue(...),
+                            $isNumber,
+                            $isArbitraryVariable,
+                            $isArbitraryValue,
                         ],
                     ],
                 ],
@@ -2545,9 +2544,9 @@ final class Config implements ConfigContract
                     [
                         'outline' => [
                             '',
-                            $isNumber(...),
-                            $isArbitraryVariableLength(...),
-                            $isArbitraryLength(...),
+                            $isNumber,
+                            $isArbitraryVariableLength,
+                            $isArbitraryLength,
                         ],
                     ],
                 ],
@@ -2578,8 +2577,8 @@ final class Config implements ConfigContract
                             '',
                             'none',
                             $themeShadow,
-                            $isArbitraryVariableShadow(...),
-                            $isArbitraryShadow(...),
+                            $isArbitraryVariableShadow,
+                            $isArbitraryShadow,
                         ],
                     ],
                 ],
@@ -2605,8 +2604,8 @@ final class Config implements ConfigContract
                         'inset-shadow' => [
                             'none',
                             $themeInsetShadow,
-                            $isArbitraryVariableShadow(...),
-                            $isArbitraryShadow(...),
+                            $isArbitraryVariableShadow,
+                            $isArbitraryShadow,
                         ],
                     ],
                 ],
@@ -2662,7 +2661,7 @@ final class Config implements ConfigContract
                  */
                 'ring-offset-w' => [
                     [
-                        'ring-offset' => [$isNumber(...), $isArbitraryLength(...)],
+                        'ring-offset' => [$isNumber, $isArbitraryLength],
                     ],
                 ],
 
@@ -2711,8 +2710,8 @@ final class Config implements ConfigContract
                         'text-shadow' => [
                             'none',
                             $themeTextShadow,
-                            $isArbitraryVariableShadow(...),
-                            $isArbitraryShadow(...),
+                            $isArbitraryVariableShadow,
+                            $isArbitraryShadow,
                         ],
                     ],
                 ],
@@ -2735,7 +2734,7 @@ final class Config implements ConfigContract
                  */
                 'opacity' => [
                     [
-                        'opacity' => [$isNumber(...), $isArbitraryVariable(...), $isArbitraryValue(...)],
+                        'opacity' => [$isNumber, $isArbitraryVariable, $isArbitraryValue],
                     ],
                 ],
 
@@ -2791,7 +2790,7 @@ final class Config implements ConfigContract
                  */
                 'mask-image-linear-pos' => [
                     [
-                        'mask-linear' => [$isNumber(...)],
+                        'mask-linear' => [$isNumber],
                     ],
                 ],
                 'mask-image-linear-from-pos' => [
@@ -2936,7 +2935,7 @@ final class Config implements ConfigContract
                 ],
                 'mask-image-radial' => [
                     [
-                        'mask-radial' => [$isArbitraryVariable(...), $isArbitraryValue(...)],
+                        'mask-radial' => [$isArbitraryVariable, $isArbitraryValue],
                     ],
                 ],
                 'mask-image-radial-from-pos' => [
@@ -2981,7 +2980,7 @@ final class Config implements ConfigContract
                 ],
                 'mask-image-conic-pos' => [
                     [
-                        'mask-conic' => [$isNumber(...)],
+                        'mask-conic' => [$isNumber],
                     ],
                 ],
                 'mask-image-conic-from-pos' => [
@@ -3078,7 +3077,7 @@ final class Config implements ConfigContract
                  */
                 'mask-image' => [
                     [
-                        'mask' => ['none', $isArbitraryVariable(...), $isArbitraryValue(...)],
+                        'mask' => ['none', $isArbitraryVariable, $isArbitraryValue],
                     ],
                 ],
 
@@ -3096,8 +3095,8 @@ final class Config implements ConfigContract
                         'filter' => [
                             '',
                             'none',
-                            $isArbitraryVariable(...),
-                            $isArbitraryValue(...),
+                            $isArbitraryVariable,
+                            $isArbitraryValue,
                         ],
                     ],
                 ],
@@ -3120,7 +3119,7 @@ final class Config implements ConfigContract
                  */
                 'brightness' => [
                     [
-                        'brightness' => [$isNumber(...), $isArbitraryVariable(...), $isArbitraryValue(...)],
+                        'brightness' => [$isNumber, $isArbitraryVariable, $isArbitraryValue],
                     ],
                 ],
 
@@ -3131,7 +3130,7 @@ final class Config implements ConfigContract
                  */
                 'contrast' => [
                     [
-                        'contrast' => [$isNumber(...), $isArbitraryVariable(...), $isArbitraryValue(...)],
+                        'contrast' => [$isNumber, $isArbitraryVariable, $isArbitraryValue],
                     ],
                 ],
 
@@ -3146,8 +3145,8 @@ final class Config implements ConfigContract
                             '',
                             'none',
                             $themeDropShadow,
-                            $isArbitraryVariableShadow(...),
-                            $isArbitraryShadow(...),
+                            $isArbitraryVariableShadow,
+                            $isArbitraryShadow,
                         ],
                     ],
                 ],
@@ -3170,7 +3169,7 @@ final class Config implements ConfigContract
                  */
                 'grayscale' => [
                     [
-                        'grayscale' => ['', $isNumber(...), $isArbitraryVariable(...), $isArbitraryValue(...)],
+                        'grayscale' => ['', $isNumber, $isArbitraryVariable, $isArbitraryValue],
                     ],
                 ],
 
@@ -3181,7 +3180,7 @@ final class Config implements ConfigContract
                  */
                 'hue-rotate' => [
                     [
-                        'hue-rotate' => [$isNumber(...), $isArbitraryVariable(...), $isArbitraryValue(...)],
+                        'hue-rotate' => [$isNumber, $isArbitraryVariable, $isArbitraryValue],
                     ],
                 ],
 
@@ -3192,7 +3191,7 @@ final class Config implements ConfigContract
                  */
                 'invert' => [
                     [
-                        'invert' => ['', $isNumber(...), $isArbitraryVariable(...), $isArbitraryValue(...)],
+                        'invert' => ['', $isNumber, $isArbitraryVariable, $isArbitraryValue],
                     ],
                 ],
 
@@ -3203,7 +3202,7 @@ final class Config implements ConfigContract
                  */
                 'saturate' => [
                     [
-                        'saturate' => [$isNumber(...), $isArbitraryVariable(...), $isArbitraryValue(...)],
+                        'saturate' => [$isNumber, $isArbitraryVariable, $isArbitraryValue],
                     ],
                 ],
 
@@ -3214,7 +3213,7 @@ final class Config implements ConfigContract
                  */
                 'sepia' => [
                     [
-                        'sepia' => ['', $isNumber(...), $isArbitraryVariable(...), $isArbitraryValue(...)],
+                        'sepia' => ['', $isNumber, $isArbitraryVariable, $isArbitraryValue],
                     ],
                 ],
 
@@ -3228,8 +3227,8 @@ final class Config implements ConfigContract
                         'backdrop-filter' => [
                             '',
                             'none',
-                            $isArbitraryVariable(...),
-                            $isArbitraryValue(...),
+                            $isArbitraryVariable,
+                            $isArbitraryValue,
                         ],
                     ],
                 ],
@@ -3252,7 +3251,7 @@ final class Config implements ConfigContract
                  */
                 'backdrop-brightness' => [
                     [
-                        'backdrop-brightness' => [$isNumber(...), $isArbitraryVariable(...), $isArbitraryValue(...)],
+                        'backdrop-brightness' => [$isNumber, $isArbitraryVariable, $isArbitraryValue],
                     ],
                 ],
 
@@ -3263,7 +3262,7 @@ final class Config implements ConfigContract
                  */
                 'backdrop-contrast' => [
                     [
-                        'backdrop-contrast' => [$isNumber(...), $isArbitraryVariable(...), $isArbitraryValue(...)],
+                        'backdrop-contrast' => [$isNumber, $isArbitraryVariable, $isArbitraryValue],
                     ],
                 ],
 
@@ -3274,7 +3273,7 @@ final class Config implements ConfigContract
                  */
                 'backdrop-grayscale' => [
                     [
-                        'backdrop-grayscale' => ['', $isNumber(...), $isArbitraryVariable(...), $isArbitraryValue(...)],
+                        'backdrop-grayscale' => ['', $isNumber, $isArbitraryVariable, $isArbitraryValue],
                     ],
                 ],
 
@@ -3285,7 +3284,7 @@ final class Config implements ConfigContract
                  */
                 'backdrop-hue-rotate' => [
                     [
-                        'backdrop-hue-rotate' => [$isNumber(...), $isArbitraryVariable(...), $isArbitraryValue(...)],
+                        'backdrop-hue-rotate' => [$isNumber, $isArbitraryVariable, $isArbitraryValue],
                     ],
                 ],
 
@@ -3296,7 +3295,7 @@ final class Config implements ConfigContract
                  */
                 'backdrop-invert' => [
                     [
-                        'backdrop-invert' => ['', $isNumber(...), $isArbitraryVariable(...), $isArbitraryValue(...)],
+                        'backdrop-invert' => ['', $isNumber, $isArbitraryVariable, $isArbitraryValue],
                     ],
                 ],
 
@@ -3307,7 +3306,7 @@ final class Config implements ConfigContract
                  */
                 'backdrop-opacity' => [
                     [
-                        'backdrop-opacity' => [$isNumber(...), $isArbitraryVariable(...), $isArbitraryValue(...)],
+                        'backdrop-opacity' => [$isNumber, $isArbitraryVariable, $isArbitraryValue],
                     ],
                 ],
 
@@ -3318,7 +3317,7 @@ final class Config implements ConfigContract
                  */
                 'backdrop-saturate' => [
                     [
-                        'backdrop-saturate' => [$isNumber(...), $isArbitraryVariable(...), $isArbitraryValue(...)],
+                        'backdrop-saturate' => [$isNumber, $isArbitraryVariable, $isArbitraryValue],
                     ],
                 ],
 
@@ -3329,7 +3328,7 @@ final class Config implements ConfigContract
                  */
                 'backdrop-sepia' => [
                     [
-                        'backdrop-sepia' => ['', $isNumber(...), $isArbitraryVariable(...), $isArbitraryValue(...)],
+                        'backdrop-sepia' => ['', $isNumber, $isArbitraryVariable, $isArbitraryValue],
                     ],
                 ],
 
@@ -3422,8 +3421,8 @@ final class Config implements ConfigContract
                             'shadow',
                             'transform',
                             'none',
-                            $isArbitraryVariable(...),
-                            $isArbitraryValue(...),
+                            $isArbitraryVariable,
+                            $isArbitraryValue,
                         ],
                     ],
                 ],
@@ -3447,10 +3446,10 @@ final class Config implements ConfigContract
                 'duration' => [
                     [
                         'duration' => [
-                            $isNumber(...),
+                            $isNumber,
                             'initial',
-                            $isArbitraryVariable(...),
-                            $isArbitraryValue(...),
+                            $isArbitraryVariable,
+                            $isArbitraryValue,
                         ],
                     ],
                 ],
@@ -3466,8 +3465,8 @@ final class Config implements ConfigContract
                             'linear',
                             'initial',
                             $themeEase,
-                            $isArbitraryVariable(...),
-                            $isArbitraryValue(...),
+                            $isArbitraryVariable,
+                            $isArbitraryValue,
                         ],
                     ],
                 ],
@@ -3480,9 +3479,9 @@ final class Config implements ConfigContract
                 'delay' => [
                     [
                         'delay' => [
-                            $isNumber(...),
-                            $isArbitraryVariable(...),
-                            $isArbitraryValue(...),
+                            $isNumber,
+                            $isArbitraryVariable,
+                            $isArbitraryValue,
                         ],
                     ],
                 ],
@@ -3497,8 +3496,8 @@ final class Config implements ConfigContract
                         'animate' => [
                             'none',
                             $themeAnimate,
-                            $isArbitraryVariable(...),
-                            $isArbitraryValue(...),
+                            $isArbitraryVariable,
+                            $isArbitraryValue,
                         ],
                     ],
                 ],
@@ -3527,8 +3526,8 @@ final class Config implements ConfigContract
                     [
                         'perspective' => [
                             $themePerspective,
-                            $isArbitraryVariable(...),
-                            $isArbitraryValue(...),
+                            $isArbitraryVariable,
+                            $isArbitraryValue,
                         ],
                     ],
                 ],
@@ -3680,8 +3679,8 @@ final class Config implements ConfigContract
                 'transform' => [
                     [
                         'transform' => [
-                            $isArbitraryVariable(...),
-                            $isArbitraryValue(...),
+                            $isArbitraryVariable,
+                            $isArbitraryValue,
                             '',
                             'none',
                             'gpu',
@@ -3855,8 +3854,8 @@ final class Config implements ConfigContract
                             'nwse-resize',
                             'zoom-in',
                             'zoom-out',
-                            $isArbitraryVariable(...),
-                            $isArbitraryValue(...),
+                            $isArbitraryVariable,
+                            $isArbitraryValue,
                         ],
                     ],
                 ],
@@ -4210,8 +4209,8 @@ final class Config implements ConfigContract
                             'scroll',
                             'contents',
                             'transform',
-                            $isArbitraryVariable(...),
-                            $isArbitraryValue(...),
+                            $isArbitraryVariable,
+                            $isArbitraryValue,
                         ],
                     ],
                 ],
@@ -4239,10 +4238,10 @@ final class Config implements ConfigContract
                 'stroke-w' => [
                     [
                         'stroke' => [
-                            $isNumber(...),
-                            $isArbitraryVariableLength(...),
-                            $isArbitraryLength(...),
-                            $isArbitraryNumber(...),
+                            $isNumber,
+                            $isArbitraryVariableLength,
+                            $isArbitraryLength,
+                            $isArbitraryNumber,
                         ],
                     ],
                 ],

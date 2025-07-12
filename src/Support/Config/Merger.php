@@ -113,7 +113,7 @@ final readonly class Merger
                 continue;
             }
 
-            $mergeFunction = match($key) {
+            $mergeFunction = match ($key) {
                 'orderSensitiveModifiers' => 'array_merge',
                 default => 'array_merge_recursive'
             };
