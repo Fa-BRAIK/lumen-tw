@@ -8,15 +8,18 @@ use Lumen\TwMerge\Support\Contracts\Config as ConfigContract;
 use Lumen\TwMerge\Support\Contracts\ConfigGroupPart;
 
 /**
- * @implements ConfigContract<string, string>
- *
  * @phpstan-import-type ThemeObject from ConfigGroupPart
  * @phpstan-import-type ClassGroup from ConfigGroupPart
+ * @phpstan-import-type AnyClassGroupIds from ConfigContract
+ * @phpstan-import-type AnyThemeGroupIds from ConfigContract
+ * @phpstan-import-type AnyConfig from ConfigContract
+ *
+ * @implements ConfigContract<AnyClassGroupIds, AnyThemeGroupIds>
  */
-final class Config implements ConfigContract
+class Config implements ConfigContract
 {
     /**
-     * @var ?ConfigContract<string, string>
+     * @var ?AnyConfig
      */
     protected static ?ConfigContract $defaultConfig = null;
 
@@ -54,12 +57,12 @@ final class Config implements ConfigContract
     ) {}
 
     /**
-     * @return ConfigContract<string, string>
+     * @return AnyConfig
      */
     public static function getDefaultConfig(): ConfigContract
     {
-        if (null !== self::$defaultConfig) {
-            return self::$defaultConfig;
+        if (null !== static::$defaultConfig) {
+            return static::$defaultConfig;
         }
 
         $themeColor = ThemeGetter::fromTheme('color');
@@ -351,7 +354,7 @@ final class Config implements ConfigContract
             'tracking' => ['tighter', 'tight', 'normal', 'wide', 'wider', 'widest'],
         ];
 
-        return self::$defaultConfig = new self(
+        return static::$defaultConfig = new static(
             cacheSize: $cacheSize,
             prefix: $prefix,
             theme: $theme,

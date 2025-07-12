@@ -12,26 +12,36 @@ use Lumen\TwMerge\Support\Contracts\Config;
 use Lumen\TwMerge\Support\Contracts\ConfigGroupPart;
 
 /**
- * @template TAnyClassGroupId of string
- * @template TAnyThemeGroupId of string
- *
+ * @phpstan-import-type AnyClassGroupIds from Config
+ * @phpstan-import-type AnyThemeGroupIds from Config
+ * @phpstan-import-type AnyConfig from Config
  * @phpstan-import-type ThemeObject from ConfigGroupPart
  * @phpstan-import-type ClassGroup from ConfigGroupPart
  *
  * @phpstan-type ClassValidatorObject = array{
- *     classGroupId: TAnyClassGroupId,
+ *     classGroupId: AnyClassGroupIds,
  *     validator: ClassValidator
  * }
+ * @phpstan-type GetClassGroupIdClosure = Closure(string): ?AnyClassGroupIds
+ * @phpstan-type GetConflictingClassGroupIdsClosure = Closure(AnyClassGroupIds, bool): array<AnyClassGroupIds>
+ *
+ * @phpstan-consistent-constructor
  */
-final class ClassPartObject
+class ClassPartObject
 {
-    private const string CLASS_PART_SEPARATOR = '-';
+    /**
+     * @var non-empty-string
+     */
+    protected const string CLASS_PART_SEPARATOR = '-';
 
-    private const string ARBITRARY_PROPERTY_PATTERN = '/^\[(.+)]$/';
+    /**
+     * @var non-empty-string
+     */
+    protected const string ARBITRARY_PROPERTY_PATTERN = '/^\[(.+)]$/';
 
     public function __construct(
         /**
-         * @var array<string, ClassPartObject<TAnyClassGroupId, TAnyThemeGroupId>>
+         * @var array<string, ClassPartObject>
          */
         protected(set) array $nextPart = [],
 
@@ -41,48 +51,48 @@ final class ClassPartObject
         protected(set) array $validators = [],
 
         /**
-         * @var ?TAnyClassGroupId
+         * @var ?AnyClassGroupIds
          */
         protected(set) ?string $classGroupId = null,
     ) {}
 
     /**
-     * @param  Config<TAnyClassGroupId, TAnyThemeGroupId>  $config
+     * @param  AnyConfig  $config
      * @return array{
-     *     getClassGroupId: Closure(string): ?TAnyClassGroupId,
-     *     getConflictingClassGroupIds: Closure(TAnyClassGroupId, bool): array<TAnyClassGroupId>
+     *     getClassGroupId: GetClassGroupIdClosure,
+     *     getConflictingClassGroupIds: GetConflictingClassGroupIdsClosure
      * }
      */
     public static function createClassGroupUtils(Config $config): array
     {
-        $classMap = self::createClassMap($config);
+        $classMap = static::createClassMap($config);
 
         /**
          * @param  string  $className
-         * @return ?TAnyClassGroupId
+         * @return ?AnyClassGroupIds
          */
         $getClassGroupId = function (string $className) use ($classMap): ?string {
-            $classParts = explode(self::CLASS_PART_SEPARATOR, $className);
+            $classParts = explode(static::CLASS_PART_SEPARATOR, $className);
 
             // Classes like `-inset-1` produce an empty string as first classPart. We assume that classes for negative values are used correctly and remove it from classParts.
             if ('' === $classParts[0] || 1 !== count($classParts)) {
                 array_shift($classParts);
             }
 
-            return self::getGroupRecursive($classParts, $classMap)
-                ?: self::getGroupIdForArbitraryProperty($className);
+            return static::getGroupRecursive($classParts, $classMap)
+                ?: static::getGroupIdForArbitraryProperty($className);
         };
 
         /**
-         * @param  TAnyClassGroupId  $classGroupId
+         * @param  AnyClassGroupIds  $classGroupId
          * @param  bool  $hasPostPrefixModifier
-         * @return array<TAnyClassGroupId>
+         * @return array<AnyClassGroupIds>
          */
         $getConflictingClassGroupIds = function (string $classGroupId, bool $hasPostPrefixModifier) use ($config): array {
-            /** @var array<TAnyClassGroupId> $conflicts */
+            /** @var array<AnyClassGroupIds> $conflicts */
             $conflicts = $config->conflictingClassGroups[$classGroupId] ?? [];
 
-            /** @var array<TAnyClassGroupId> $conflictingClassGroupModifiers */
+            /** @var array<AnyClassGroupIds> $conflictingClassGroupModifiers */
             $conflictingClassGroupModifiers = $config->conflictingClassGroupModifiers[$classGroupId] ?? [];
 
             if ($hasPostPrefixModifier && $conflictingClassGroupModifiers) {
@@ -93,22 +103,20 @@ final class ClassPartObject
         };
 
         /**
-         * @var Closure(string): ?TAnyClassGroupId $getClassGroupId
+         * @var Closure(string): ?AnyClassGroupIds $getClassGroupId
          */
         return compact('getClassGroupId', 'getConflictingClassGroupIds');
     }
 
     /**
-     * @param  Config<TAnyClassGroupId, TAnyThemeGroupId>  $config
-     * @return ClassPartObject<TAnyClassGroupId, TAnyThemeGroupId>
+     * @param  AnyConfig  $config
      */
-    public static function createClassMap(Config $config): self
+    public static function createClassMap(Config $config): static
     {
-        /** @var self<TAnyClassGroupId, TAnyThemeGroupId> $classMap */
-        $classMap = new self();
+        $classMap = new static();
 
         foreach ($config->classGroups as $classGroupId => $classGroup) {
-            self::processClassesRecursively(
+            static::processClassesRecursively(
                 $classGroup,
                 $classMap,
                 $classGroupId,
@@ -121,10 +129,9 @@ final class ClassPartObject
 
     /**
      * @param  array<string>  $classParts
-     * @param  ClassPartObject<TAnyClassGroupId, TAnyThemeGroupId>  $classPartObjects
-     * @return ?TAnyClassGroupId
+     * @return ?AnyClassGroupIds
      */
-    private static function getGroupRecursive(array $classParts, ClassPartObject $classPartObjects): ?string
+    protected static function getGroupRecursive(array $classParts, ClassPartObject $classPartObjects): ?string
     {
         if ( ! $classParts) {
             return $classPartObjects->classGroupId;
@@ -133,7 +140,7 @@ final class ClassPartObject
         $currentClassPart = $classParts[0];
         $nextClassPartObject = $classPartObjects->nextPart[$currentClassPart] ?? null;
         $classGroupFromNextClassPart = $nextClassPartObject
-            ? self::getGroupRecursive(
+            ? static::getGroupRecursive(
                 array_slice($classParts, 1),
                 $nextClassPartObject
             )
@@ -146,7 +153,7 @@ final class ClassPartObject
             return null;
         }
 
-        $classRest = implode(self::CLASS_PART_SEPARATOR, $classParts);
+        $classRest = implode(static::CLASS_PART_SEPARATOR, $classParts);
 
         $validator = Arr::first(
             $classPartObjects->validators,
@@ -156,9 +163,9 @@ final class ClassPartObject
         return $validator ? $validator['classGroupId'] : null;
     }
 
-    private static function getGroupIdForArbitraryProperty(string $className): ?string
+    protected static function getGroupIdForArbitraryProperty(string $className): ?string
     {
-        $arbitraryPropertyClassName = Str::match(self::ARBITRARY_PROPERTY_PATTERN, $className);
+        $arbitraryPropertyClassName = Str::match(static::ARBITRARY_PROPERTY_PATTERN, $className);
 
         if ($arbitraryPropertyClassName) {
             $property = Str::before($arbitraryPropertyClassName, ':');
@@ -174,11 +181,10 @@ final class ClassPartObject
 
     /**
      * @param  ClassGroup  $classGroup
-     * @param  ClassPartObject<TAnyClassGroupId, TAnyThemeGroupId>  $classPartObject
-     * @param  TAnyClassGroupId  $classGroupId
+     * @param  AnyClassGroupIds  $classGroupId
      * @param  ThemeObject  $theme
      */
-    private static function processClassesRecursively(
+    protected static function processClassesRecursively(
         array $classGroup,
         ClassPartObject $classPartObject,
         string $classGroupId,
@@ -188,10 +194,10 @@ final class ClassPartObject
             if (is_string($classDefinition)) {
                 $classPartObjectToEdit = '' === $classDefinition
                     ? $classPartObject
-                    : self::getPart($classPartObject, $classDefinition);
+                    : static::getPart($classPartObject, $classDefinition);
                 $classPartObjectToEdit->classGroupId = $classGroupId;
             } elseif ($classDefinition instanceof ThemeGetter) {
-                self::processClassesRecursively(
+                static::processClassesRecursively(
                     $classDefinition->get($theme),
                     $classPartObject,
                     $classGroupId,
@@ -204,9 +210,9 @@ final class ClassPartObject
                 ];
             } else {
                 foreach ($classDefinition as $key => $classGroup) {
-                    self::processClassesRecursively(
+                    static::processClassesRecursively(
                         $classGroup,
-                        self::getPart($classPartObject, $key),
+                        static::getPart($classPartObject, $key),
                         $classGroupId,
                         $theme
                     );
@@ -215,15 +221,11 @@ final class ClassPartObject
         }
     }
 
-    /**
-     * @param  ClassPartObject<TAnyClassGroupId, TAnyThemeGroupId>  $classPartObject
-     * @return ClassPartObject<TAnyClassGroupId, TAnyThemeGroupId>
-     */
-    private static function getPart(ClassPartObject $classPartObject, string $path): ClassPartObject
+    protected static function getPart(ClassPartObject $classPartObject, string $path): ClassPartObject
     {
         $currentClassPartObject = $classPartObject;
 
-        foreach (explode(self::CLASS_PART_SEPARATOR, $path) as $pathPart) {
+        foreach (explode(static::CLASS_PART_SEPARATOR, $path) as $pathPart) {
             $currentClassPartObject->nextPart[$pathPart] ??= new ClassPartObject(
                 nextPart: [],
                 validators: [],
@@ -233,7 +235,7 @@ final class ClassPartObject
             $currentClassPartObject = $currentClassPartObject->nextPart[$pathPart];
         }
 
-        /** @var ClassPartObject<TAnyClassGroupId, TAnyThemeGroupId> */
+        /** @var ClassPartObject */
         return $currentClassPartObject;
     }
 }
