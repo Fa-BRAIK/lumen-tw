@@ -27,7 +27,7 @@ final class ClassPartObject
 {
     private const string CLASS_PART_SEPARATOR = '-';
 
-    private const string ARBITRARY_PROPERTY_REGEX = '/^\[(.+)\]$/';
+    private const string ARBITRARY_PROPERTY_PATTERN = '/^\[(.+)]$/';
 
     public function __construct(
         /**
@@ -158,7 +158,7 @@ final class ClassPartObject
 
     private static function getGroupIdForArbitraryProperty(string $className): ?string
     {
-        $arbitraryPropertyClassName = Str::match(self::ARBITRARY_PROPERTY_REGEX, $className);
+        $arbitraryPropertyClassName = Str::match(self::ARBITRARY_PROPERTY_PATTERN, $className);
 
         if ($arbitraryPropertyClassName) {
             $property = Str::before($arbitraryPropertyClassName, ':');
