@@ -25,4 +25,18 @@ return [
      * @see https://tailwindcss.com/docs/styling-with-utility-classes#using-the-prefix-option
      */
     'prefix' => env('LUMEN_TW_PREFIX', ''),
+
+    /**
+     * Blade directive name, defaults to 'twMerge'.
+     *
+     * Setting this to `false` or `null` will disable the directive.
+     */
+    'tw_merge_directive' => env('LUMEN_TW_DIRECTIVE', 'twMerge'),
+
+    /**
+     * Component attribute bag macro name, defaults to 'twMerge'.
+     *
+     * Setting this to `false` or `null` will disable the macro.
+     */
+    'tw_merge_macro' => env('LUMEN_TW_MACRO', 'twMerge'),
 ];

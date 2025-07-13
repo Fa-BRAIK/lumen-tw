@@ -42,6 +42,20 @@ use Lumen\TwMerge\Facades\TwMerge;
 TwMerge::merge('px-2 py-1 bg-red hover:bg-dark-red', 'p-3 bg-[#B91C1C]');
 ```
 
+```html
+{{-- Using Blade Directive --}}
+<div @twMerge('bg-blue-600 hover:bg-blue-700', 'bg-blue-400')>
+    ...   
+</div>
+```
+
+```html
+{{-- Within blade components using attribute bag macro --}}
+<div {{ $attributes->twMerge('text-center') }}>
+    ...
+</div>
+```
+
 ## Supported Laravel Versions
 - ☑️ 11.x
 - ☑️ 12.x
@@ -73,7 +87,10 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 ## Acknowledgements
 
-This package is a port of the [tailwind-merge](https://github.com/dcastil/tailwind-merge) for Laravel.
+- This package is a port of the [tailwind-merge](https://github.com/dcastil/tailwind-merge) for Laravel.
+- I created this package as a successor to the [laravel-tailwind-merge](https://github.com/gehrisandro/tailwind-merge-laravel)
+as it was not maintained anymore and as a result, it doesn't support Tailwindcss 4.x and above.
+  - Attribute bag macro `twMerge` and `@twMerge` blade directive are taken from this package.
 
 ## Credits
 
