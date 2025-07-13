@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Lumen\TwMerge\Facades\TwMerge;
 use Lumen\TwMerge\Support\CssClassBuilder;
 
 if ( ! function_exists('tw_merge')) {
@@ -12,7 +13,7 @@ if ( ! function_exists('tw_merge')) {
      */
     function tw_merge(array|string|null ...$classes): string
     {
-        return app('twMerge')->merge(...$classes);
+        return TwMerge::merge(...$classes);
     }
 }
 
