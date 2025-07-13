@@ -49,11 +49,11 @@ This package supports Tailwind CSS versions up to 4.1.
 - ☑️ 4.0.0
 - ☑️ 3.x (Legacy)
 
-## Testing
+## Reference
 
-```bash
-composer test
-```
+- [Configuration](https://github.com/Fa-BRAIK/lumen-tw/tree/main/docs/configuration.md)
+- [CssClassBuilder](https://github.com/Fa-BRAIK/lumen-tw/tree/main/docs/css-class-builder.md)
+- [Api Reference](https://github.com/Fa-BRAIK/lumen-tw/tree/main/docs/api-reference.md)
 
 ## Changelog
 
@@ -66,6 +66,10 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 ## Security Vulnerabilities
 
 Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
+
+## Acknowledgements
+
+This package is a port of the [tailwind-merge](https://github.com/dcastil/tailwind-merge) for Laravel.
 
 ## Credits
 
