@@ -42,6 +42,10 @@ use Lumen\TwMerge\Facades\TwMerge;
 TwMerge::merge('px-2 py-1 bg-red hover:bg-dark-red', 'p-3 bg-[#B91C1C]');
 ```
 
+## Supported Laravel Versions
+- ☑️ 11.x
+- ☑️ 12.x
+
 ## Supported Tailwind CSS Versions
 
 This package supports Tailwind CSS versions up to 4.1.
