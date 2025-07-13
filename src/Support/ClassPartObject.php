@@ -75,7 +75,7 @@ class ClassPartObject
             $classParts = explode(static::CLASS_PART_SEPARATOR, $className);
 
             // Classes like `-inset-1` produce an empty string as first classPart. We assume that classes for negative values are used correctly and remove it from classParts.
-            if ('' === $classParts[0] || 1 !== count($classParts)) {
+            if ('' === $classParts[0] && 1 !== count($classParts)) {
                 array_shift($classParts);
             }
 

@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 use Lumen\TwMerge\Support\Config;
+use Lumen\TwMerge\Support\Contracts\Config as ConfigContract;
+use Lumen\TwMerge\TwMerge;
 
 it('can merge config', function (): void {
     expect($mergedConfig = Config\Merger::mergeConfig(
@@ -112,5 +114,32 @@ it('can merge config', function (): void {
         ->toEqual([
             'order-2',
             'order-3',
+        ]);
+});
+
+it('can merge config from alias', function (): void {
+    expect(app('twMerge')->withAdditionalConfig([
+        'cacheSize' => 100,
+        'prefix' => 'tw',
+        'override' => [
+            'theme' => [
+                'aspect' => ['square'],
+            ],
+        ],
+        'extend' => [
+            'theme' => [
+                'aspect' => ['video'],
+            ],
+        ],
+    ]))
+        ->toBeInstanceOf(TwMerge::class)
+        ->getFinalConfig()
+        ->toBeInstanceOf(ConfigContract::class)
+        ->and(app('twMerge')->getFinalConfig()->cacheSize)
+        ->toBe(100)
+        ->and(app('twMerge')->getFinalConfig()->prefix, 'tw')
+        ->and(app('twMerge')->getFinalConfig()->theme)
+        ->toMatchArray([
+            'aspect' => ['square', 'video'],
         ]);
 });

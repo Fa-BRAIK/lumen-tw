@@ -11,6 +11,6 @@ final class IsPercentValidator extends Validator
     public function __invoke(string $className): bool
     {
         return Str::endsWith($className, '%')
-            && resolve(IsNumberValidator::class)(str_replace('%', '', $className));
+            && resolve(IsNumberValidator::class)(Str::replace('%', '', $className));
     }
 }

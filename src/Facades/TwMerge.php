@@ -8,7 +8,10 @@ use Illuminate\Support\Facades\Facade;
 use Lumen\TwMerge\Support\Contracts\Config as ConfigContract;
 
 /**
- * @method ConfigContract<string, string> getDefaultConfig()
+ * @method static ConfigContract<string, string> getDefaultConfig()
+ * @method static ConfigContract<string, string> getFinalConfig()
+ * @method static \Lumen\TwMerge\TwMerge withAdditionalConfig(mixed[] $extensions)
+ * @method static string merge(mixed ...$classList)
  *
  * @see \Lumen\TwMerge\TwMerge
  */

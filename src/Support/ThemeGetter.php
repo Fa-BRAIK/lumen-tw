@@ -10,7 +10,7 @@ use Lumen\TwMerge\Support\Contracts\ConfigGroupPart;
  * @phpstan-import-type ThemeObject from ConfigGroupPart
  * @phpstan-import-type ClassGroup from ConfigGroupPart
  */
-final readonly class ThemeGetter
+readonly class ThemeGetter
 {
     public function __construct(public string $key) {}
 

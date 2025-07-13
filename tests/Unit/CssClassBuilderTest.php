@@ -9,26 +9,26 @@ it('can be instantiated', function (): void {
     expect(new CssClassBuilder())
         ->toHaveProperty('classes')
         ->classes
-            ->tobeInstanceOf(Collection::class)
-            ->tohaveCount(0)
-    ->and(new CssClassBuilder('foo', ['bar']))
+        ->tobeInstanceOf(Collection::class)
+        ->tohaveCount(0)
+        ->and(new CssClassBuilder('foo', ['bar']))
         ->toHaveProperty('classes')
-            ->classes
-                ->tobeInstanceOf(Collection::class)
-                ->tohaveCount(2)
-            ->build()
-                ->toBe('foo bar');
+        ->classes
+        ->tobeInstanceOf(Collection::class)
+        ->tohaveCount(2)
+        ->build()
+        ->toBe('foo bar');
 });
 
 it('can add additional classes when working with an instance', function (): void {
     expect(new CssClassBuilder('foo', ['bar']))
         ->classes
-            ->toHaveCount(2)
+        ->toHaveCount(2)
         ->add('baz', ['qux'])
-            ->classes
-                ->toHaveCount(4)
-            ->build()
-                ->toBe('foo bar baz qux');
+        ->classes
+        ->toHaveCount(4)
+        ->build()
+        ->toBe('foo bar baz qux');
 });
 
 test('strings', function (string $classes, string $expected): void {
@@ -68,12 +68,12 @@ test('arrays (nested)', function (array $classes, string $expected): void {
 })->with([
     [[[]], ''],
     [[['foo']], 'foo'],
-    [[[null, ['foo', 'bar']]], 'foo bar']
+    [[[null, ['foo', 'bar']]], 'foo bar'],
 ]);
 
 test('mixed (variadic)', function (mixed $classes, string $expected): void {
     expect(CssClassBuilder::staticBuild(...$classes))->toBe($expected);
 })->with([
     [[null, 'foo', [['bar']]], 'foo bar'],
-    [[null, [['foo', 'bar']], 'baz', '', [[['qux']]], null], 'foo bar baz qux']
+    [[null, [['foo', 'bar']], 'baz', '', [[['qux']]], null], 'foo bar baz qux'],
 ]);

@@ -29,7 +29,7 @@ use Lumen\TwMerge\Support\Contracts\ConfigGroupPart;
  *     extend?: PartialConfigGroupPart,
  * }
  */
-final readonly class Merger
+readonly class Merger
 {
     /**
      * @param  Config<TClassGroupIds, TThemeGroupIds>  $config
@@ -47,11 +47,11 @@ final readonly class Merger
         }
 
         if (array_key_exists('override', $extension)) {
-            self::overrideConfig($config, $extension['override']);
+            static::overrideConfig($config, $extension['override']);
         }
 
         if (array_key_exists('extend', $extension)) {
-            self::extendConfig($config, $extension['extend']);
+            static::extendConfig($config, $extension['extend']);
         }
 
         return $config;
@@ -61,7 +61,7 @@ final readonly class Merger
      * @param  Config<TClassGroupIds, TThemeGroupIds>  $config
      * @param  PartialConfigGroupPart  $override
      */
-    private static function overrideConfig(Config &$config, array $override): void
+    protected static function overrideConfig(Config &$config, array $override): void
     {
         foreach ($override as $key => $value) {
             $functionName = 'set' . ucfirst($key);
@@ -104,7 +104,7 @@ final readonly class Merger
      * @param  Config<TClassGroupIds, TThemeGroupIds>  $config
      * @param  PartialConfigGroupPart  $extend
      */
-    private static function extendConfig(Config &$config, array $extend): void
+    protected static function extendConfig(Config &$config, array $extend): void
     {
         foreach ($extend as $key => $value) {
             $functionName = 'set' . ucfirst($key);

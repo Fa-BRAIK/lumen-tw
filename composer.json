@@ -39,7 +39,10 @@
     "autoload": {
         "psr-4": {
             "Lumen\\TwMerge\\": "src/"
-        }
+        },
+        "files": [
+            "src/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
@@ -58,9 +61,9 @@
         "pre-commit": [
             "@post-autoload-dump",
             "@format",
-            "@type-coverage",
             "@analyse",
-            "@test"
+            "@test",
+            "@type-coverage"
         ]
     },
     "config": {
