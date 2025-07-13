@@ -17,6 +17,11 @@ if ( ! function_exists('tw_merge')) {
 }
 
 if ( ! function_exists('css_classes_builder')) {
+    /**
+     * Create a new instance of CssClassBuilder.
+     *
+     * @param  array<string>|string|null  $classes
+     */
     function css_classes_builder(array|string|null ...$classes): CssClassBuilder
     {
         return new CssClassBuilder(...$classes);
