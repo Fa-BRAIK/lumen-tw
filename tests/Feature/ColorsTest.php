@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+beforeEach(function (): void {
+    app('twMerge')->resetConfig();
+});
+
 it('handles color conflicts properly', function (): void {
     expect(app('twMerge')->merge('bg-grey-5 bg-hotpink'))
         ->toBe('bg-hotpink')

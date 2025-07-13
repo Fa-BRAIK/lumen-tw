@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+beforeEach(function (): void {
+    app('twMerge')->resetConfig();
+});
+
 it('can merge standalone classes from same group correctly', function (string $input, string $expected): void {
     expect(app('twMerge')->merge($input))->tobe($expected);
 })->with([

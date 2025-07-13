@@ -2,9 +2,12 @@
 
 declare(strict_types=1);
 
+beforeEach(function (): void {
+    app('twMerge')->resetConfig();
+});
+
 it('can extend the config with single config', function (): void {
     app('twMerge')
-        ->resetConfig()
         ->withAdditionalConfig([
             'cacheSize' => 20,
             'extend' => [
@@ -42,7 +45,6 @@ it('can extend the config with single config', function (): void {
 
 it('can extend the config with multiple configs', function (): void {
     app('twMerge')
-        ->resetConfig()
         ->withAdditionalConfig([
             'cacheSize' => 20,
             'extend' => [
@@ -87,7 +89,6 @@ it('can extend the config with multiple configs', function (): void {
 
 it('can overrides and extends config correctly', function (): void {
     app('twMerge')
-        ->resetConfig()
         ->withAdditionalConfig([
             'cacheSize' => 20,
             'override' => [

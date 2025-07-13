@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+beforeEach(function (): void {
+    app('twMerge')->resetConfig();
+});
+
 it('merges classes from same group correctly', function (): void {
     expect(app('twMerge')->merge('overflow-x-auto overflow-x-hidden'))
         ->toBe('overflow-x-hidden')

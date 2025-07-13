@@ -6,6 +6,10 @@ use Lumen\TwMerge\Support\Config;
 use Lumen\TwMerge\Support\Contracts\Config as ConfigContract;
 use Lumen\TwMerge\TwMerge;
 
+beforeEach(function (): void {
+    app('twMerge')->resetConfig();
+});
+
 it('can merge config', function (): void {
     expect($mergedConfig = Config\Merger::mergeConfig(
         config: new Config(

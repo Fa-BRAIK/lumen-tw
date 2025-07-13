@@ -15,6 +15,11 @@ $data = [
     [['grow', [null, [['grow-[2]']]]], 'grow-[2]'],
 ];
 
+
+beforeEach(function (): void {
+    app('twMerge')->resetConfig();
+});
+
 it('can perform class merge using a global function', function (array $inputs, string $expected): void {
     expect(twMerge(...$inputs))->toBe($expected);
 })->with($data);

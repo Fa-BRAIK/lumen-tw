@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+beforeEach(function (): void {
+    app('twMerge')->resetConfig();
+});
+
 it('can handle basic arbitrary variants', function (): void {
     expect(app('twMerge')->merge('[p]:underline [p]:line-through'))
         ->toBe('[p]:line-through')

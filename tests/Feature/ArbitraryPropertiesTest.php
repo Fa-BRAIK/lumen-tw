@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+beforeEach(function (): void {
+    app('twMerge')->resetConfig();
+});
+
 it('handles arbitrary property conflicts correctly', function (): void {
     expect(app('twMerge')->merge('[paint-order:markers] [paint-order:normal]'))
         ->toBe('[paint-order:normal]')

@@ -4465,4 +4465,9 @@ class Config implements ConfigContract
 
         return $this;
     }
+
+    public static function wipeDefaultInstance(): void
+    {
+        static::$defaultConfig = null;
+    }
 }

@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 use Lumen\TwMerge\Support\Contracts\Config;
 
+beforeEach(function (): void {
+    app('twMerge')->resetConfig();
+});
+
 it('can get the default config', function (): void {
     $defaultConfig = app('twMerge')->getDefaultConfig();
 

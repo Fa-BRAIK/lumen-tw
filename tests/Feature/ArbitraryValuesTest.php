@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+beforeEach(function (): void {
+    app('twMerge')->resetConfig();
+});
+
 it('handles simple conflicts with arbitrary values correctly', function (): void {
     expect(app('twMerge')->merge('m-[2px] m-[10px]'))
         ->toBe('m-[10px]')
