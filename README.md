@@ -6,7 +6,7 @@
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/lumen/lumen-tw/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/lumen/lumen-tw/actions?query=workflow%3Arun-tests+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/lumen-ui/lumen-tw.svg?style=flat-square)](https://packagist.org/packages/lumen-ui/lumen-tw)
 
-A [tailwind-merge](https://github.com/dcastil/tailwind-merge) port for Laravel.
+A [tailwind-merge](https://github.com/dcastil/tailwind-merge) port for Laravel. Support up to version 4.1 of Tailwind CSS.
 
 <p align="center">
     <picture>
@@ -41,6 +41,13 @@ use Lumen\TwMerge\Facades\TwMerge;
 
 TwMerge::merge('px-2 py-1 bg-red hover:bg-dark-red', 'p-3 bg-[#B91C1C]');
 ```
+
+## Supported Tailwind CSS Versions
+
+This package supports Tailwind CSS versions up to 4.1.
+- ☑️ 4.1.0
+- ☑️ 4.0.0
+- ☑️ 3.x (Legacy)
 
 ## Testing
 
