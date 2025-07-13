@@ -1,3 +1,10 @@
+<p align="center">
+    <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="https://github.com/Fa-BRAIK/lumen-tw/blob/main/art/dark%3Ahow-to-use.png">
+        <img alt="LumenTw example" src="https://github.com/Fa-BRAIK/lumen-tw/blob/main/art/light%3Ahow-to-use.png" height="300px">
+    </picture>
+</p>
+
 # Lumen-ui Tailwind Merge
 
 [![GitHub License](https://img.shields.io/github/license/nuxtifyts/php-dto)](https://github.com/Fa-BRAIK/lumen-tw/blob/main/LICENSE.md)
@@ -7,13 +14,6 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/lumen-ui/lumen-tw.svg?style=flat-square)](https://packagist.org/packages/lumen-ui/lumen-tw)
 
 A [tailwind-merge](https://github.com/dcastil/tailwind-merge) port for Laravel.
-
-<p align="center">
-    <picture>
-        <source media="(prefers-color-scheme: dark)" srcset="https://github.com/Fa-BRAIK/lumen-tw/blob/main/art/dark%3Ahow-to-use.png">
-        <img alt="LumenTw example" src="https://github.com/Fa-BRAIK/lumen-tw/blob/main/art/light%3Ahow-to-use.png" height="350px">
-    </picture>
-</p>
 
 ## Installation
 
