@@ -28,12 +28,11 @@ class TwMerge
     protected ?CacheRepository $cache = null;
 
     /**
-     * @param  ?AnyConfig  $config
      * @return AnyConfig
      */
-    public function getDefaultConfig(?ConfigContract $config = null): ConfigContract
+    public function getDefaultConfig(): ConfigContract
     {
-        return $config ?? Config::getDefaultConfig();
+        return Config::getDefaultConfig();
     }
 
     /**

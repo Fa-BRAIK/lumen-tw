@@ -9,15 +9,13 @@ beforeEach(function (): void {
 });
 
 it('can get the default config', function (): void {
-    $defaultConfig = app('twMerge')->getDefaultConfig();
-
-    expect($defaultConfig)
+    expect(app('twMerge')->getDefaultConfig())
         ->toBeInstanceOf(Config::class)
         ->toHaveProperty('cacheSize', config('lumen-tw.cache_size'))
         ->toHaveProperty('prefix', config('lumen-tw.prefix'))
         ->not()
         ->toHaveProperty('nonExistent')
-        ->and($defaultConfig->classGroups)
+        ->classGroups
         ->toHaveKey('display.0', 'block')
         ->toHaveKey('overflow.0.overflow.0', 'auto')
         ->not()
