@@ -77,3 +77,24 @@ test('mixed (variadic)', function (mixed $classes, string $expected): void {
     [[null, 'foo', [['bar']]], 'foo bar'],
     [[null, [['foo', 'bar']], 'baz', '', [[['qux']]], null], 'foo bar baz qux'],
 ]);
+
+test('conditionally add classes', function (): void {
+    expect(new CssClassBuilder('foo'))
+        ->addIf(true, 'bar')
+        ->addIf(false, 'baz')
+        ->addIf(fn () => true, 'qux')
+        ->build()
+        ->toBe('foo bar qux');
+});
+
+test('uses css class builder from global function', function (): void {
+    expect(css_classes_builder('foo', ['bar']))
+        ->toHaveProperty('classes')
+        ->classes
+        ->tobeInstanceOf(Collection::class)
+        ->tohaveCount(2)
+        ->build()
+        ->toBe('foo bar')
+    ->and(build_css_classes('foo', ['bar']))
+        ->toBe('foo bar');
+});

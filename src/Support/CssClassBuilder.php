@@ -7,6 +7,7 @@ namespace Lumen\TwMerge\Support;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Lumen\TwMerge\Support\Contracts\CssClassBuilder as CssClassBuilderContract;
+use Closure;
 
 /**
  * @phpstan-import-type ClassNameValue from CssClassBuilderContract
@@ -39,6 +40,19 @@ class CssClassBuilder implements CssClassBuilderContract
     public function add(array|string|null ...$classes): self
     {
         $this->classes = $this->classes->push(...$classes);
+
+        return $this;
+    }
+
+    /**
+     * @param  bool|Closure():bool $condition
+     * @param  ClassNameValue  ...$classes
+     */
+    public function addIf(bool|Closure $condition, array|string|null ...$classes): self
+    {
+        if (value($condition)) {
+            $this->classes = $this->classes->push(...$classes);
+        }
 
         return $this;
     }
