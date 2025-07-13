@@ -11,7 +11,7 @@ A [tailwind-merge](https://github.com/dcastil/tailwind-merge) port for Laravel.
 <p align="center">
     <picture>
         <source media="(prefers-color-scheme: dark)" srcset="https://github.com/Fa-BRAIK/lumen-tw/blob/main/art/dark%3Ahow-to-use.png">
-        <img alt="LumenTw example" src="https://github.com/Fa-BRAIK/lumen-tw/blob/main/art/light%3Ahow-to-use.png" height="350px">
+        <img alt="LumenTw example" src="https://github.com/Fa-BRAIK/lumen-tw/blob/main/art/light%3Ahow-to-use.png" height="300px">
     </picture>
 </p>
 
