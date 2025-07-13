@@ -32,7 +32,7 @@ twMerge('px-2 py-1 bg-red hover:bg-dark-red', 'p-3 bg-[#B91C1C]')
 
 ```php
 // Via service container
-app('lumenTw')->merge('px-2 py-1 bg-red hover:bg-dark-red', 'p-3 bg-[#B91C1C]');
+app('twMerge')->merge('px-2 py-1 bg-red hover:bg-dark-red', 'p-3 bg-[#B91C1C]');
 ```
 
 ```php
