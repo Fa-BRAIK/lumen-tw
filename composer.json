@@ -1,5 +1,5 @@
 {
-    "name": "lumen/lumen-tw",
+    "name": "lumen-ui/lumen-tw",
     "description": "Tailwind merge port for Laravel",
     "keywords": [
         "Lumen",
