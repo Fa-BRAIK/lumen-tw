@@ -27,7 +27,7 @@ composer require lumen-ui/lumen-tw
 
 ```php
 // Via global function
-twMerge('px-2 py-1 bg-red hover:bg-dark-red', 'p-3 bg-[#B91C1C]')
+tw_merge('px-2 py-1 bg-red hover:bg-dark-red', 'p-3 bg-[#B91C1C]')
 ```
 
 ```php

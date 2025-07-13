@@ -20,7 +20,7 @@ beforeEach(function (): void {
 });
 
 it('can perform class merge using a global function', function (array $inputs, string $expected): void {
-    expect(twMerge(...$inputs))->toBe($expected);
+    expect(tw_merge(...$inputs))->toBe($expected);
 })->with($data);
 
 it('can perform class merge using a facade', function (array $inputs, string $expected): void {

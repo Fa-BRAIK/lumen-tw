@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 use Lumen\TwMerge\Support\CssClassBuilder;
 
-if ( ! function_exists('twMerge')) {
+if ( ! function_exists('tw_merge')) {
     /**
      * Merge Tailwind CSS classes.
      *
      * @param  array<string>|string|null  $classes
      */
-    function twMerge(array|string|null ...$classes): string
+    function tw_merge(array|string|null ...$classes): string
     {
         return app('twMerge')->merge(...$classes);
     }
