@@ -2,8 +2,9 @@
 
 [![GitHub License](https://img.shields.io/github/license/nuxtifyts/php-dto)](https://github.com/Fa-BRAIK/lumen-tw/blob/main/LICENSE.md)
 [![PHP](https://img.shields.io/badge/php-%23777BB4.svg?&logo=php&logoColor=white&label=8.4)](https://www.php.net/releases/8.4/en.php)
+[![PhpStan Level](https://img.shields.io/badge/PHPStan-level%2010-brightgreen.svg)](https://phpstan.org/user-guide/rule-levels)
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/lumen-ui/lumen-tw.svg?style=flat-square)](https://packagist.org/packages/lumen-ui/lumen-tw)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/lumen/lumen-tw/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/lumen/lumen-tw/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![run-tests](https://github.com/Fa-BRAIK/lumen-tw/actions/workflows/run-tests.yml/badge.svg)](https://github.com/Fa-BRAIK/lumen-tw/actions/workflows/run-tests.yml)
 [![Total Downloads](https://img.shields.io/packagist/dt/lumen-ui/lumen-tw.svg?style=flat-square)](https://packagist.org/packages/lumen-ui/lumen-tw)
 
 A [tailwind-merge](https://github.com/dcastil/tailwind-merge) port for Laravel. Support up to version 4.1 of Tailwind CSS.
