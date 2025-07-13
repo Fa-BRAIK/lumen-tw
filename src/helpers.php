@@ -16,14 +16,14 @@ if ( ! function_exists('tw_merge')) {
     }
 }
 
-if (! function_exists('css_classes_builder')) {
+if ( ! function_exists('css_classes_builder')) {
     function css_classes_builder(array|string|null ...$classes): CssClassBuilder
     {
         return new CssClassBuilder(...$classes);
     }
 }
 
-if (! function_exists('build_css_classes')) {
+if ( ! function_exists('build_css_classes')) {
     /**
      * Build CSS classes from the given input.
      *

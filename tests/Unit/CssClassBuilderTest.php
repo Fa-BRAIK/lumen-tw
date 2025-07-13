@@ -95,6 +95,6 @@ test('uses css class builder from global function', function (): void {
         ->tohaveCount(2)
         ->build()
         ->toBe('foo bar')
-    ->and(build_css_classes('foo', ['bar']))
+        ->and(build_css_classes('foo', ['bar']))
         ->toBe('foo bar');
 });

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Lumen\TwMerge\Support;
 
+use Closure;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Lumen\TwMerge\Support\Contracts\CssClassBuilder as CssClassBuilderContract;
-use Closure;
 
 /**
  * @phpstan-import-type ClassNameValue from CssClassBuilderContract
@@ -45,7 +45,7 @@ class CssClassBuilder implements CssClassBuilderContract
     }
 
     /**
-     * @param  bool|Closure():bool $condition
+     * @param  bool|Closure():bool  $condition
      * @param  ClassNameValue  ...$classes
      */
     public function addIf(bool|Closure $condition, array|string|null ...$classes): self
