@@ -4402,6 +4402,11 @@ class Config implements ConfigContract
         );
     }
 
+    public static function wipeDefaultInstance(): void
+    {
+        static::$defaultConfig = null;
+    }
+
     public function setCacheSize(?int $cacheSize): self
     {
         $this->cacheSize = $cacheSize;
@@ -4464,10 +4469,5 @@ class Config implements ConfigContract
         $this->orderSensitiveModifiers = $orderSensitiveModifiers;
 
         return $this;
-    }
-
-    public static function wipeDefaultInstance(): void
-    {
-        static::$defaultConfig = null;
     }
 }

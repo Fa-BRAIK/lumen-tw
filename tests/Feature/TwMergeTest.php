@@ -15,7 +15,6 @@ $data = [
     [['grow', [null, [['grow-[2]']]]], 'grow-[2]'],
 ];
 
-
 beforeEach(function (): void {
     app('twMerge')->resetConfig();
 });

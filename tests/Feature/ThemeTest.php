@@ -15,7 +15,7 @@ it('can extend the theme', function (): void {
                 'spacing' => ['my-space'],
                 'leading' => ['my-leading'],
             ],
-        ]
+        ],
     ]);
 
     expect(app('twMerge')->merge('p-3 p-my-space p-my-margin'))->toBe('p-my-space p-my-margin')
@@ -31,11 +31,11 @@ it('can extend the theme object', function (): void {
             'classGroups' => [
                 'px' => [
                     [
-                        'px' => [ThemeGetter::fromTheme('my-theme')]
+                        'px' => [ThemeGetter::fromTheme('my-theme')],
                     ],
-                ]
-            ]
-        ]
+                ],
+            ],
+        ],
     ]);
 
     expect(app('twMerge')->merge('p-3 p-hello p-hallo'))->toBe('p-3 p-hello p-hallo')
