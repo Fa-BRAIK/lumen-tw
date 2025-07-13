@@ -1,59 +1,45 @@
-# Tailwind merge port for Laravel
+# Lumen-ui Tailwind Merge
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/lumen/lumen-tw.svg?style=flat-square)](https://packagist.org/packages/lumen/lumen-tw)
+[![GitHub License](https://img.shields.io/github/license/nuxtifyts/php-dto)](https://github.com/Fa-BRAIK/lumen-tw/blob/main/LICENSE.md)
+[![PHP](https://img.shields.io/badge/php-%23777BB4.svg?&logo=php&logoColor=white&label=8.4)](https://www.php.net/releases/8.4/en.php)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/lumen-ui/lumen-tw.svg?style=flat-square)](https://packagist.org/packages/lumen-ui/lumen-tw)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/lumen/lumen-tw/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/lumen/lumen-tw/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/lumen/lumen-tw/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/lumen/lumen-tw/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/lumen/lumen-tw.svg?style=flat-square)](https://packagist.org/packages/lumen/lumen-tw)
+[![Total Downloads](https://img.shields.io/packagist/dt/lumen-ui/lumen-tw.svg?style=flat-square)](https://packagist.org/packages/lumen-ui/lumen-tw)
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
+A [tailwind-merge](https://github.com/dcastil/tailwind-merge) port for Laravel.
 
-## Support us
-
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/lumen-tw.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/lumen-tw)
-
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
-
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
+<p align="center">
+    <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="https://github.com/Fa-BRAIK/lumen-tw/blob/main/art/dark%3Ahow-to-use.png">
+        <img alt="LumenTw example" src="https://github.com/Fa-BRAIK/lumen-tw/blob/main/art/light%3Ahow-to-use.png" height="350px">
+    </picture>
+</p>
 
 ## Installation
 
 You can install the package via composer:
 
 ```bash
-composer require lumen/lumen-tw
-```
-
-You can publish and run the migrations with:
-
-```bash
-php artisan vendor:publish --tag="lumen-tw-migrations"
-php artisan migrate
-```
-
-You can publish the config file with:
-
-```bash
-php artisan vendor:publish --tag="lumen-tw-config"
-```
-
-This is the contents of the published config file:
-
-```php
-return [
-];
-```
-
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag="lumen-tw-views"
+composer require lumen-ui/lumen-tw
 ```
 
 ## Usage
 
 ```php
-$twMerge = new Lumen\TwMerge();
-echo $twMerge->echoPhrase('Hello, Lumen!');
+// Via global function
+twMerge('px-2 py-1 bg-red hover:bg-dark-red', 'p-3 bg-[#B91C1C]')
+```
+
+```php
+// Via service container
+app('lumenTw')->merge('px-2 py-1 bg-red hover:bg-dark-red', 'p-3 bg-[#B91C1C]');
+```
+
+```php
+// Via Facade
+use Lumen\TwMerge\Facades\TwMerge;
+
+TwMerge::merge('px-2 py-1 bg-red hover:bg-dark-red', 'p-3 bg-[#B91C1C]');
 ```
 
 ## Testing
