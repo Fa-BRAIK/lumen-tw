@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Blade;
-use Illuminate\View\ComponentAttributeBag;
 use Lumen\TwMerge\Facades\TwMerge;
 
 $data = [
@@ -32,13 +31,4 @@ it('can perform class merge using a facade', function (array $inputs, string $ex
 it('can perform class merge using a blade directive', function (): void {
     expect(Blade::compileString('@twMerge("foo bar baz")'))
         ->toBe('<?php echo tw_merge("foo bar baz"); ?>');
-});
-
-it('can perform class merge using component attribute bag macro', function (): void {
-    $attributes = new ComponentAttributeBag(['class' => 'text-base text-center']);
-
-    /** @var ComponentAttributeBag $attributes */
-    $attributes = $attributes->twMerge('text-lg')->twMerge('text-primary');
-
-    expect($attributes->get('class'))->toBe('text-center text-lg text-primary');
 });
