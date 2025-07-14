@@ -92,7 +92,7 @@ Please review [our security policy](../../security/policy) on how to report secu
 - This package is a port of the [tailwind-merge](https://github.com/dcastil/tailwind-merge) for Laravel.
 - I created this package as a successor to the [laravel-tailwind-merge](https://github.com/gehrisandro/tailwind-merge-laravel)
 as it was not maintained anymore and as a result, it doesn't support Tailwindcss 4.x and above.
-  - Attribute bag macro `twMerge` and `@twMerge` blade directive are taken from this package.
+  - Attribute bag macro `twMerge`, `twMergeFor` and `withoutTwMergeClasses` along with `@twMerge` blade directive are taken from this package.
 
 ## Credits
 
