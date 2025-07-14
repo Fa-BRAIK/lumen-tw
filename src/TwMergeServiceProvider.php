@@ -70,30 +70,67 @@ class TwMergeServiceProvider extends PackageServiceProvider
     protected function registerAttributesBagMacros(): static
     {
         /** @var string|false|null $twMergeMacroName */
-        $twMergeMacroName = config('lumen-tw.tw_merge_macro', 'twMerge');
+        $twMergeMacroName = config('lumen-tw.tw_merge_macro');
 
-        if (false === $twMergeMacroName || null === $twMergeMacroName) {
-            return $this;
+        if ($twMergeMacroName) {
+            ComponentAttributeBag::macro(
+                $twMergeMacroName,
+                /**
+                 * @param  array<string>|string|null  $args
+                 */
+                function (array|string|null ...$args): ComponentAttributeBag {
+                    /** @var ComponentAttributeBag $this */
+                    $classes = $this->get('class', '');
+
+                    if ( ! is_string($classes)) {
+                        throw new InvalidArgumentException('The "class" attribute must be a string.');
+                    }
+
+                    $this->offsetSet('class', tw_merge($args, $classes)); // @phpstan-ignore-line
+
+                    return $this;
+                }
+            );
         }
 
-        ComponentAttributeBag::macro(
-            $twMergeMacroName,
-            /**
-             * @param  array<string>|string|null  $args
-             */
-            function (array|string|null ...$args): ComponentAttributeBag {
-                $class = $this->get('class', '');
+        /** @var string|false|null $twMergeForMacroName */
+        $twMergeForMacroName = config('lumen-tw.tw_merge_for_macro');
 
-                if ( ! is_string($class)) {
-                    throw new InvalidArgumentException('The "class" attribute must be a string.');
+        if ($twMergeForMacroName) {
+            ComponentAttributeBag::macro(
+                $twMergeForMacroName,
+                /**
+                 * @param  array<string>|string|null  $args
+                 */
+                function (string $for, ...$args): ComponentAttributeBag {
+                    /** @var ComponentAttributeBag $this */
+                    $attribute = 'class' . ('' !== $for ? ':' . $for : '');
+
+                    $classes = $this->get($attribute, '');
+
+                    if ( ! is_string($classes)) {
+                        throw new InvalidArgumentException('The "class" attribute must be a string.');
+                    }
+
+                    $this->offsetSet('class', tw_merge($args, $classes)); // @phpstan-ignore-line
+
+                    return $this->only('class');
                 }
+            );
+        }
 
-                /** @var ComponentAttributeBag $this */
-                $this->offsetSet('class', tw_merge($class, ...$args)); // @phpstan-ignore-line
+        /** @var string|false|null $withoutTwMergeClassesMarcoName */
+        $withoutTwMergeClassesMarcoName = config('lumen-tw.without_tw_merge_classes_macro');
 
-                return $this;
-            }
-        );
+        if ($withoutTwMergeClassesMarcoName) {
+            ComponentAttributeBag::macro(
+                $withoutTwMergeClassesMarcoName,
+                function (): ComponentAttributeBag {
+                    /** @var ComponentAttributeBag $this */
+                    return $this->whereDoesntStartWith('class:');
+                }
+            );
+        }
 
         return $this;
     }

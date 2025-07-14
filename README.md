@@ -71,6 +71,7 @@ This package supports Tailwind CSS versions up to 4.1.
 ## Reference
 
 - [Configuration](https://github.com/Fa-BRAIK/lumen-tw/tree/main/docs/configuration.md)
+- [Usage Within Blade](https://github.com/Fa-BRAIK/lumen-tw/tree/main/docs/usage-within-blade.md)
 - [CssClassBuilder](https://github.com/Fa-BRAIK/lumen-tw/tree/main/docs/css-class-builder.md)
 - [Api Reference](https://github.com/Fa-BRAIK/lumen-tw/tree/main/docs/api-reference.md)
 
