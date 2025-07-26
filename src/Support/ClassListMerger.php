@@ -64,11 +64,11 @@ class ClassListMerger
 
             $parsedClassName = $parseClassName($originalClassName);
 
-            $isExternal = $parsedClassName->isExternal;
-            $modifiers = $parsedClassName->modifiers;
-            $hasImportantModifier = $parsedClassName->hasImportantModifier;
-            $baseClassName = $parsedClassName->baseClassName;
-            $maybePostfixModifierPosition = $parsedClassName->maybePostfixModifierPosition;
+            $isExternal = $parsedClassName->isItExternal();
+            $modifiers = $parsedClassName->getModifiers();
+            $hasImportantModifier = $parsedClassName->doesItHaveImportantModifier();
+            $baseClassName = $parsedClassName->getBaseClassName();
+            $maybePostfixModifierPosition = $parsedClassName->getMaybePostfixModifierPosition();
 
             if ($isExternal) {
                 $result = Arr::prepend($result, $originalClassName);
