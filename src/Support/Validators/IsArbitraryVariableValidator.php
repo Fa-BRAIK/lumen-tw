@@ -7,10 +7,10 @@ namespace Lumen\TwMerge\Support\Validators;
 final class IsArbitraryVariableValidator extends RegexValidator
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function patterns(): string
     {
-        return  self::ARBITRARY_VARIABLE_PATTERN;
+        return self::ARBITRARY_VARIABLE_PATTERN;
     }
 }
