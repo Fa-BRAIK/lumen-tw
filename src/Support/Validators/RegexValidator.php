@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Lumen\TwMerge\Support\Validators;
 
+use Illuminate\Support\Arr;
+
 abstract class RegexValidator extends Validator
 {
     public function __invoke(string $className): bool
@@ -14,11 +16,17 @@ abstract class RegexValidator extends Validator
         $patterns = is_array($patterns) ? $patterns : [$patterns];
         $excludes = is_array($excludes) ? $excludes : [$excludes];
 
-        if (array_any($patterns, fn (string $pattern) => (bool) preg_match($pattern, $className))) {
-            return array_all($excludes, fn (string $exclude) => ! preg_match($exclude, $className));
-        }
+        $anyPatterns = (bool) Arr::where(
+            $patterns,
+            static fn (string $pattern) => (bool) preg_match($pattern, $className)
+        );
 
-        return false;
+        $allExcludes = count(Arr::where(
+            $excludes,
+            static fn (string $exclude) => ! preg_match($exclude, $className)
+        )) === count($excludes);
+
+        return $anyPatterns && $allExcludes;
     }
 
     /**
