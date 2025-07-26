@@ -6,7 +6,11 @@ namespace Lumen\TwMerge\Support\Validators;
 
 final class IsArbitraryValueValidator extends RegexValidator
 {
-    public string $patterns {
-        get => self::ARBITRARY_VALUE_PATTERN;
+    /**
+     * @inheritDoc
+     */
+    public function patterns(): string
+    {
+        return self::ARBITRARY_VALUE_PATTERN;
     }
 }

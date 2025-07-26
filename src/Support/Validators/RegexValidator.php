@@ -9,23 +9,27 @@ abstract class RegexValidator extends Validator
     /**
      * A regex pattern or an array of regex patterns to validate class names.
      *
-     * @var string|list<string>
+     * @return string|list<string>
      */
-    abstract public string|array $patterns { get; }
+    abstract public function patterns(): string|array;
 
     /**
      * a regex pattern or an array of regex patterns to exclude from validation.
      *
-     * @var string|list<string>
+     * @return string|list<string>
      */
-    public string|array $excludes {
-        get => [];
+    public function excludes(): string|array
+    {
+        return [];
     }
 
     public function __invoke(string $className): bool
     {
-        $patterns = is_array($this->patterns) ? $this->patterns : [$this->patterns];
-        $excludes = is_array($this->excludes) ? $this->excludes : [$this->excludes];
+        $patterns = $this->patterns();
+        $excludes = $this->excludes();
+
+        $patterns = is_array($patterns) ? $patterns : [$patterns];
+        $excludes = is_array($excludes) ? $excludes : [$excludes];
 
         if (array_any($patterns, fn (string $pattern) => (bool) preg_match($pattern, $className))) {
             return array_all($excludes, fn (string $exclude) => ! preg_match($exclude, $className));
