@@ -17,11 +17,21 @@ class CssClassBuilder implements CssClassBuilderContract
     /**
      * @var Collection<array-key, ClassNameValue>
      */
-    public protected(set) Collection $classes;
+    protected Collection $classes;
 
     public function __construct(array|string|null ...$classes)
     {
         $this->classes = collect($classes);
+    }
+
+    /**
+     * Get the collection of classes.
+     *
+     * @return Collection<array-key, ClassNameValue>
+     */
+    public function getClasses(): Collection
+    {
+        return $this->classes;
     }
 
     public function __toString(): string
