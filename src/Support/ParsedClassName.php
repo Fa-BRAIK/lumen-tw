@@ -29,7 +29,7 @@ class ParsedClassName
          *
          * If this is `true`, the class will be treated as if it wasn't a Tailwind class and will be passed through as is.
          */
-        protected(set) ?bool $isExternal = null,
+        protected ?bool $isExternal = null,
 
         /**
          * Modifiers of the class in the order they appear in the class.
@@ -38,21 +38,21 @@ class ParsedClassName
          *
          * @var array<string>
          */
-        protected(set) array $modifiers = [],
+        protected array $modifiers = [],
 
         /**
          * Whether the class has an `!important` modifier.
          *
          * @example true // for `hover:dark:!bg-gray-100`
          */
-        protected(set) ?bool $hasImportantModifier = null,
+        protected ?bool $hasImportantModifier = null,
 
         /**
          * Base class without preceding modifiers.
          *
          * @example 'bg-gray-100' // for `hover:dark:bg-gray-100`
          */
-        protected(set) string $baseClassName = '',
+        protected string $baseClassName = '',
 
         /**
          * Index position of a possible postfix modifier in the class.
@@ -64,7 +64,7 @@ class ParsedClassName
          *
          * @example 11 // for `bg-gray-100/50`
          */
-        protected(set) ?int $maybePostfixModifierPosition = null,
+        protected ?int $maybePostfixModifierPosition = null,
     ) {}
 
     /**
@@ -136,8 +136,8 @@ class ParsedClassName
             );
         };
 
-        if ($config->prefix) {
-            $fullPrefix = $config->prefix . self::MODIFIER_SEPARATOR;
+        if ($config->getPrefix()) {
+            $fullPrefix = $config->getPrefix() . self::MODIFIER_SEPARATOR;
             $parseClassNameOriginal = $parseClassName;
             $parseClassName = fn (string $className) => Str::startsWith($className, $fullPrefix)
                 ? $parseClassNameOriginal(Str::substr($className, Str::length($fullPrefix)))
@@ -162,7 +162,7 @@ class ParsedClassName
     public static function createSortModifiers(ConfigContract $config): Closure
     {
         $orderSensitiveModifiers = Arr::mapWithKeys(
-            $config->orderSensitiveModifiers,
+            $config->getOrderSensitiveModifiers(),
             static fn (string $modifier) => [$modifier => true]
         );
 
@@ -201,6 +201,34 @@ class ParsedClassName
                 ...Arr::sort($unsortedModifiers),
             ];
         };
+    }
+
+    public function isItExternal(): ?bool
+    {
+        return $this->isExternal;
+    }
+
+    /**
+     * @return array<string>
+     */
+    public function getModifiers(): array
+    {
+        return $this->modifiers;
+    }
+
+    public function doesItHaveImportantModifier(): bool
+    {
+        return $this->hasImportantModifier ?? false;
+    }
+
+    public function getBaseClassName(): string
+    {
+        return $this->baseClassName;
+    }
+
+    public function getMaybePostfixModifierPosition(): ?int
+    {
+        return $this->maybePostfixModifierPosition;
     }
 
     protected static function stripImportantModifier(string $baseClassName): string

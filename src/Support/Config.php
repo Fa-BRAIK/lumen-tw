@@ -27,33 +27,33 @@ class Config implements ConfigContract
      * @template TClassGroupIds of string
      */
     public function __construct(
-        protected(set) ?int $cacheSize = null,
-        protected(set) ?string $prefix = null,
+        protected ?int $cacheSize = null,
+        protected ?string $prefix = null,
 
         /**
          * @var ThemeObject
          */
-        protected(set) array $theme = [],
+        protected array $theme = [],
 
         /**
          * @var array<TClassGroupIds, ClassGroup>
          */
-        protected(set) array $classGroups = [],
+        protected array $classGroups = [],
 
         /**
          * @var array<TClassGroupIds, array<TClassGroupIds>>
          */
-        protected(set) array $conflictingClassGroups = [],
+        protected array $conflictingClassGroups = [],
 
         /**
          * @var array<TClassGroupIds, array<TClassGroupIds>>
          */
-        protected(set) array $conflictingClassGroupModifiers = [],
+        protected array $conflictingClassGroupModifiers = [],
 
         /**
          * @var array<string>
          */
-        protected(set) array $orderSensitiveModifiers = [],
+        protected array $orderSensitiveModifiers = [],
     ) {}
 
     /**
@@ -4405,6 +4405,62 @@ class Config implements ConfigContract
     public static function wipeDefaultInstance(): void
     {
         static::$defaultConfig = null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getCacheSize(): ?int
+    {
+        return $this->cacheSize;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getPrefix(): ?string
+    {
+        return $this->prefix;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getTheme(): array
+    {
+        return $this->theme;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getClassGroups(): array
+    {
+        return $this->classGroups;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getConflictingClassGroups(): array
+    {
+        return $this->conflictingClassGroups;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getConflictingClassGroupModifiers(): array
+    {
+        return $this->conflictingClassGroupModifiers;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getOrderSensitiveModifiers(): array
+    {
+        return $this->orderSensitiveModifiers;
     }
 
     public function setCacheSize(?int $cacheSize): self

@@ -8,12 +8,12 @@ use Lumen\TwMerge\Support\CssClassBuilder;
 it('can be instantiated', function (): void {
     expect(new CssClassBuilder())
         ->toHaveProperty('classes')
-        ->classes
+        ->getClasses()
         ->tobeInstanceOf(Collection::class)
         ->tohaveCount(0)
         ->and(new CssClassBuilder('foo', ['bar']))
         ->toHaveProperty('classes')
-        ->classes
+        ->getClasses()
         ->tobeInstanceOf(Collection::class)
         ->tohaveCount(2)
         ->build()
@@ -22,10 +22,10 @@ it('can be instantiated', function (): void {
 
 it('can add additional classes when working with an instance', function (): void {
     expect(new CssClassBuilder('foo', ['bar']))
-        ->classes
+        ->getClasses()
         ->toHaveCount(2)
         ->add('baz', ['qux'])
-        ->classes
+        ->getClasses()
         ->toHaveCount(4)
         ->build()
         ->toBe('foo bar baz qux');
@@ -90,7 +90,7 @@ test('conditionally add classes', function (): void {
 test('uses css class builder from global function', function (): void {
     expect(css_classes_builder('foo', ['bar']))
         ->toHaveProperty('classes')
-        ->classes
+        ->getClasses()
         ->tobeInstanceOf(Collection::class)
         ->tohaveCount(2)
         ->build()

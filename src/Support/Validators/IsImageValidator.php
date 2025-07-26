@@ -6,7 +6,8 @@ namespace Lumen\TwMerge\Support\Validators;
 
 final class IsImageValidator extends RegexValidator
 {
-    public string $patterns {
-        get => self::IMAGE_PATTERN;
+    public function patterns(): string
+    {
+        return self::IMAGE_PATTERN;
     }
 }

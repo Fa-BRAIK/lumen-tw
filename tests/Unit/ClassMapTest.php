@@ -10,7 +10,7 @@ it('class map has correct class groups at first part', function (): void {
     $classMap = ClassPartObject::createClassMap(Config::getDefaultConfig());
 
     /** @var array<string, array<string>> $classGroupsByFirstPart */
-    $classGroupsByFirstPart = collect($classMap->nextPart)
+    $classGroupsByFirstPart = collect($classMap->getNextPart())
         ->mapWithKeys(fn (ClassPartObject $value, string $key) => [
             $key => array_values(Arr::sort(getClassGroupsInClassPart($value))),
         ])
@@ -18,9 +18,9 @@ it('class map has correct class groups at first part', function (): void {
 
     expect($classMap)
         ->toBeInstanceOf(ClassPartObject::class)
-        ->and($classMap->classGroupId)
+        ->and($classMap->getClassGroupId())
         ->toBeNull()
-        ->and($classMap->validators)
+        ->and($classMap->getValidators())
         ->toBeEmpty()
         ->and($classGroupsByFirstPart)
         ->toEqual([
@@ -351,15 +351,15 @@ function getClassGroupsInClassPart(ClassPartObject $classPart): array
 {
     $classGroupIds = [];
 
-    if ($classPart->classGroupId) {
-        $classGroupIds[] = $classPart->classGroupId;
+    if ($classPart->getClassGroupId()) {
+        $classGroupIds[] = $classPart->getClassGroupId();
     }
 
-    foreach ($classPart->validators as $validator) {
+    foreach ($classPart->getValidators() as $validator) {
         $classGroupIds[] = $validator['classGroupId'];
     }
 
-    foreach ($classPart->nextPart as $nextClassPart) {
+    foreach ($classPart->getNextPart() as $nextClassPart) {
         $classGroupIds = [
             ...$classGroupIds,
             ...getClassGroupsInClassPart($nextClassPart),

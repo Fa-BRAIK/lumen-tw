@@ -65,12 +65,13 @@ readonly class Merger
     {
         foreach ($override as $key => $value) {
             $functionName = 'set' . ucfirst($key);
+            $getterName = 'get' . ucfirst($key);
 
             if ( ! method_exists($config, $functionName)) {
                 continue;
             }
 
-            $configValue = $config->{$key};
+            $configValue = $config->{$getterName}();
 
             // If the dotted key ends with an integer, we need to group those values
             // For example, if we end up with ['foo.bar.0' => 'value1', 'foo.bar.1' => 'value2'],
@@ -118,8 +119,10 @@ readonly class Merger
                 default => 'array_merge_recursive'
             };
 
+            $getterFunction = 'get' . ucfirst($key);
+
             $config->{$functionName}(
-                $mergeFunction($config->{$key}, $value) // @phpstan-ignore-line
+                $mergeFunction($config->{$getterFunction}(), $value) // @phpstan-ignore-line
             );
         }
     }

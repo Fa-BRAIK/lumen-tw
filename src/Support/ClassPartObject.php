@@ -43,17 +43,17 @@ class ClassPartObject
         /**
          * @var array<string, ClassPartObject>
          */
-        protected(set) array $nextPart = [],
+        protected array $nextPart = [],
 
         /**
          * @var array<ClassValidatorObject>
          */
-        protected(set) array $validators = [],
+        protected array $validators = [],
 
         /**
          * @var ?AnyClassGroupIds
          */
-        protected(set) ?string $classGroupId = null,
+        protected ?string $classGroupId = null,
     ) {}
 
     /**
@@ -90,10 +90,10 @@ class ClassPartObject
          */
         $getConflictingClassGroupIds = function (string $classGroupId, bool $hasPostPrefixModifier) use ($config): array {
             /** @var array<AnyClassGroupIds> $conflicts */
-            $conflicts = $config->conflictingClassGroups[$classGroupId] ?? [];
+            $conflicts = $config->getConflictingClassGroups()[$classGroupId] ?? [];
 
             /** @var array<AnyClassGroupIds> $conflictingClassGroupModifiers */
-            $conflictingClassGroupModifiers = $config->conflictingClassGroupModifiers[$classGroupId] ?? [];
+            $conflictingClassGroupModifiers = $config->getConflictingClassGroupModifiers()[$classGroupId] ?? [];
 
             if ($hasPostPrefixModifier && $conflictingClassGroupModifiers) {
                 $conflicts = [...$conflicts, ...$conflictingClassGroupModifiers];
@@ -115,16 +115,40 @@ class ClassPartObject
     {
         $classMap = new static();
 
-        foreach ($config->classGroups as $classGroupId => $classGroup) {
+        foreach ($config->getClassGroups() as $classGroupId => $classGroup) {
             static::processClassesRecursively(
                 $classGroup,
                 $classMap,
                 $classGroupId,
-                $config->theme
+                $config->getTheme()
             );
         }
 
         return $classMap;
+    }
+
+    /**
+     * @return array<string, ClassPartObject>
+     */
+    public function getNextPart(): array
+    {
+        return $this->nextPart;
+    }
+
+    /**
+     * @return array<ClassValidatorObject>
+     */
+    public function getValidators(): array
+    {
+        return $this->validators;
+    }
+
+    /**
+     * @return ?AnyClassGroupIds
+     */
+    public function getClassGroupId(): ?string
+    {
+        return $this->classGroupId;
     }
 
     /**

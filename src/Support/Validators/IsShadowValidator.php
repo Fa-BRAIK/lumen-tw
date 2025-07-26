@@ -6,7 +6,11 @@ namespace Lumen\TwMerge\Support\Validators;
 
 final class IsShadowValidator extends RegexValidator
 {
-    public string $patterns {
-        get => self::SHADOW_PATTERN;
+    /**
+     * {@inheritDoc}
+     */
+    public function patterns(): string
+    {
+        return self::SHADOW_PATTERN;
     }
 }
