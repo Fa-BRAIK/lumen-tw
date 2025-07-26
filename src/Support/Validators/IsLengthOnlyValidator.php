@@ -9,7 +9,7 @@ use Override;
 final class IsLengthOnlyValidator extends RegexValidator
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function patterns(): string
     {
@@ -17,7 +17,7 @@ final class IsLengthOnlyValidator extends RegexValidator
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     #[Override]
     public function excludes(): string
