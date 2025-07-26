@@ -28,9 +28,9 @@ interface ConfigGroupPart
      *
      * The keys are the same as in the Tailwind config but the values are sometimes defined more broadly.
      *
-     * @var ThemeObject
+     * @return ThemeObject
      */
-    public array $theme { get; }
+    public function getTheme(): array;
 
     /**
      * Object with groups of classes.
@@ -43,9 +43,9 @@ interface ConfigGroupPart
      *      'other-group': [{ 'look-at-me': ['other', 'group']}]
      *  }
      *
-     * @var array<TClassGroupIds, ClassGroup>
+     * @return array<TClassGroupIds, ClassGroup>
      */
-    public array $classGroups { get; }
+    public function getClassGroups(): array;
 
     /**
      * Conflicting classes across groups.
@@ -56,9 +56,9 @@ interface ConfigGroupPart
      *
      * @example { gap: ['gap-x', 'gap-y'] }
      *
-     * @var array<TClassGroupIds, array<TClassGroupIds>>
+     * @return array<TClassGroupIds, array<TClassGroupIds>>
      */
-    public array $conflictingClassGroups { get; }
+    public function getConflictingClassGroups(): array;
 
     /**
      * Postfix modifiers conflicting with other class groups.
@@ -67,18 +67,18 @@ interface ConfigGroupPart
      *
      * @example { 'font-size': ['leading'] }
      *
-     * @var array<TClassGroupIds, array<TClassGroupIds>>
+     * @return array<TClassGroupIds, array<TClassGroupIds>>
      */
-    public array $conflictingClassGroupModifiers { get; }
+    public function getConflictingClassGroupModifiers(): array;
 
     /**
      * Modifiers whose order among multiple modifiers should be preserved because their order changes which element gets targeted.
      *
      * tailwind-merge makes sure that classes with these modifiers are not overwritten by classes with the same modifiers with order-sensitive modifiers being in a different position.
      *
-     * @var array<string>
+     * @return array<string>
      */
-    public array $orderSensitiveModifiers { get; }
+    public function getOrderSensitiveModifiers(): array;
 
     /**
      * @param  array<TClassGroupIds, ClassGroup>  $classGroups

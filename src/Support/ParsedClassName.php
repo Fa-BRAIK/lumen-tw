@@ -67,34 +67,6 @@ class ParsedClassName
         protected ?int $maybePostfixModifierPosition = null,
     ) {}
 
-    public function isItExternal(): ?bool
-    {
-        return $this->isExternal;
-    }
-
-    /**
-     * @return array<string>
-     */
-    public function getModifiers(): array
-    {
-        return $this->modifiers;
-    }
-
-    public function doesItHaveImportantModifier(): bool
-    {
-        return $this->hasImportantModifier ?? false;
-    }
-
-    public function getBaseClassName(): string
-    {
-        return $this->baseClassName;
-    }
-
-    public function getMaybePostfixModifierPosition(): ?int
-    {
-        return $this->maybePostfixModifierPosition;
-    }
-
     /**
      * @param  AnyConfig  $config
      * @return CreateParseClassNameClosure
@@ -164,8 +136,8 @@ class ParsedClassName
             );
         };
 
-        if ($config->prefix) {
-            $fullPrefix = $config->prefix . self::MODIFIER_SEPARATOR;
+        if ($config->getPrefix()) {
+            $fullPrefix = $config->getPrefix() . self::MODIFIER_SEPARATOR;
             $parseClassNameOriginal = $parseClassName;
             $parseClassName = fn (string $className) => Str::startsWith($className, $fullPrefix)
                 ? $parseClassNameOriginal(Str::substr($className, Str::length($fullPrefix)))
@@ -190,7 +162,7 @@ class ParsedClassName
     public static function createSortModifiers(ConfigContract $config): Closure
     {
         $orderSensitiveModifiers = Arr::mapWithKeys(
-            $config->orderSensitiveModifiers,
+            $config->getOrderSensitiveModifiers(),
             static fn (string $modifier) => [$modifier => true]
         );
 
@@ -229,6 +201,34 @@ class ParsedClassName
                 ...Arr::sort($unsortedModifiers),
             ];
         };
+    }
+
+    public function isItExternal(): ?bool
+    {
+        return $this->isExternal;
+    }
+
+    /**
+     * @return array<string>
+     */
+    public function getModifiers(): array
+    {
+        return $this->modifiers;
+    }
+
+    public function doesItHaveImportantModifier(): bool
+    {
+        return $this->hasImportantModifier ?? false;
+    }
+
+    public function getBaseClassName(): string
+    {
+        return $this->baseClassName;
+    }
+
+    public function getMaybePostfixModifierPosition(): ?int
+    {
+        return $this->maybePostfixModifierPosition;
     }
 
     protected static function stripImportantModifier(string $baseClassName): string

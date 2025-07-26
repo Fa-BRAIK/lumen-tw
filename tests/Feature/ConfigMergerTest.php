@@ -72,14 +72,14 @@ it('can merge config', function (): void {
         ]
     ))
         ->toBeInstanceOf(Config::class)
-        ->toHaveProperty('cacheSize', 100)
-        ->toHaveProperty('prefix', null)
-        ->and($mergedConfig->theme)
+        ->getCacheSize()->toBe(100)
+        ->getPrefix()->toBeNull()
+        ->and($mergedConfig->getTheme())
         ->toEqual([
             'hi' => ['ho'],
             'themeToOverride' => ['overridden'],
         ])
-        ->and($mergedConfig->classGroups)
+        ->and($mergedConfig->getClassGroups())
         ->toEqual([
             'fooKey' => [
                 [
@@ -103,18 +103,18 @@ it('can merge config', function (): void {
             'groupToOverride' => ['I', 'overrode', 'you', 'extended'],
             'groupToOverride2' => ['this', 'will', 'not', 'be', 'overridden'],
         ])
-        ->and($mergedConfig->conflictingClassGroups)
+        ->and($mergedConfig->getConflictingClassGroups())
         ->toEqual([
             'toOverride' => ['groupOverridden'],
             'fooKey' => ['otherKey'],
             'otherKey' => ['fooKey', 'fooKey2'],
         ])
-        ->and($mergedConfig->conflictingClassGroupModifiers)
+        ->and($mergedConfig->getConflictingClassGroupModifiers())
         ->toEqual([
             'hello' => ['world', 'world2'],
             'toOverride' => ['overridden-2'],
         ])
-        ->and($mergedConfig->orderSensitiveModifiers)
+        ->and($mergedConfig->getOrderSensitiveModifiers())
         ->toEqual([
             'order-2',
             'order-3',
@@ -139,10 +139,11 @@ it('can merge config from alias', function (): void {
         ->toBeInstanceOf(TwMerge::class)
         ->getFinalConfig()
         ->toBeInstanceOf(ConfigContract::class)
-        ->and(app('twMerge')->getFinalConfig()->cacheSize)
+        ->and(app('twMerge')->getFinalConfig()->getCacheSize())
         ->toBe(100)
-        ->and(app('twMerge')->getFinalConfig()->prefix, 'tw')
-        ->and(app('twMerge')->getFinalConfig()->theme)
+        ->and(app('twMerge')->getFinalConfig()->getPrefix())
+        ->toBe('tw')
+        ->and(app('twMerge')->getFinalConfig()->getTheme())
         ->toMatchArray([
             'aspect' => ['square', 'video'],
         ]);

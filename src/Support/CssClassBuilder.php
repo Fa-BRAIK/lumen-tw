@@ -24,16 +24,6 @@ class CssClassBuilder implements CssClassBuilderContract
         $this->classes = collect($classes);
     }
 
-    /**
-     * Get the collection of classes.
-     *
-     * @return Collection<array-key, ClassNameValue>
-     */
-    public function getClasses(): Collection
-    {
-        return $this->classes;
-    }
-
     public function __toString(): string
     {
         return $this->build();
@@ -42,6 +32,16 @@ class CssClassBuilder implements CssClassBuilderContract
     public static function staticBuild(string|array|null ...$classes): string
     {
         return static::buildCollection(collect($classes));
+    }
+
+    /**
+     * Get the collection of classes.
+     *
+     * @return Collection<array-key, ClassNameValue>
+     */
+    public function getClasses(): Collection
+    {
+        return $this->classes;
     }
 
     /**
